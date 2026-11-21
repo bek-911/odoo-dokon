@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Daftarsiz do'kon</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800;900&family=Onest:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap">
+<style>
+/* Layout: kobalt hero ichida jonli kassa cheki (bosib sinab ko'riladi), so'ng og'riq → yechim, imkoniyatlar, 4 qadam, savollar, chaqiriq.
+   Bitta ataylab tanlangan ko'rinish: kobalt + narx-yorliq sarig'i, oq chek qog'ozi. */
+:root{
+  --cobalt:#1a35e0; --cobalt-deep:#0f1f8f; --tag:#ffd23f; --paper:#ffffff; --ink:#0d1330; --ink-soft:#4a5170;
+  --page:#eef0fb; --line:#d6daf0; --good:#0d8a5f; --bad:#c2372f;
+  --f-display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --f-body:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"Space Mono",ui-monospace,Consolas,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{background:var(--page);color:var(--ink)}
+body{font-family:var(--f-body);font-size:17px;line-height:1.55}
+.in{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance;letter-spacing:-.01em}
+p{margin:0}
+a{color:inherit}
+
+/* HERO */
+.hero{background:var(--cobalt);color:var(--paper);margin-top:calc(-1 * env(safe-area-inset-top,0px));padding-top:calc(env(safe-area-inset-top,0px) + 28px);padding-bottom:64px;overflow:hidden;position:relative}
+.hero::after{content:"";position:absolute;inset:auto -10% -1px -10%;height:40px;background:var(--page);clip-path:polygon(0 100%,100% 100%,100% 0,0 100%)}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:44px;flex-wrap:wrap}
+.logo{font-family:var(--f-display);font-weight:800;font-size:18px;display:flex;align-items:center;gap:8px}
+.logo i{width:22px;height:22px;background:var(--tag);border-radius:4px 50% 50% 4px;display:inline-block;transform:rotate(-12deg)}
+.btn{display:inline-flex;align-items:center;gap:8px;font:700 16px var(--f-body);text-decoration:none;border-radius:12px;padding:14px 22px;border:2px solid transparent;cursor:pointer;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn:focus-visible{outline:3px solid var(--tag);outline-offset:3px}
+.btn.yellow{background:var(--tag);color:var(--ink)}
+.btn.ghost{border-color:rgba(255,255,255,.5);color:var(--paper)}
+.btn.small{padding:8px 14px;font-size:14px}
+.herogrid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.herogrid>div{min-width:0}
+.kicker{display:inline-block;background:rgba(255,255,255,.14);padding:6px 12px;border-radius:99px;font-size:14px;font-weight:600;margin-bottom:20px}
+.hero h1{font-size:clamp(38px,7.4vw,76px);line-height:.98;font-weight:900}
+.hero h1 mark{background:var(--tag);color:var(--ink);padding:0 .12em;border-radius:6px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.hero .sub{font-size:clamp(17px,2.2vw,20px);margin-top:22px;max-width:34ch;color:rgba(255,255,255,.88)}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+
+/* chek */
+.receipt-wrap{display:flex;flex-direction:column;align-items:center;gap:14px}
+.receipt{width:100%;max-width:340px;background:var(--paper);color:var(--ink);font-family:var(--f-mono);font-size:14px;padding:22px 20px 30px;transform:rotate(2deg);box-shadow:0 30px 60px rgba(5,10,60,.35);
+  -webkit-mask:radial-gradient(circle 7px at 7px 100%,transparent 6.5px,#000 7px) 0 0/14px 100% repeat-x;mask:radial-gradient(circle 7px at 7px 100%,transparent 6.5px,#000 7px) 0 0/14px 100% repeat-x;animation:print .9s ease-out both}
+@keyframes print{from{transform:rotate(2deg) translateY(-14px)}to{transform:rotate(2deg) translateY(0)}}
+.receipt .shop{text-align:center;font-weight:700;font-size:15px}
+.receipt .meta{text-align:center;font-size:12px;color:var(--ink-soft);margin-bottom:10px}
+.receipt hr{border:0;border-top:1px dashed var(--ink-soft);margin:10px 0}
+.receipt .ln{display:flex;justify-content:space-between;gap:10px;font-variant-numeric:tabular-nums}
+.receipt .ln span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.receipt .ln.new{animation:flash .6s}
+@keyframes flash{from{background:var(--tag)}to{background:transparent}}
+.receipt .total{font-weight:700;font-size:17px}
+.receipt .stock{font-size:12px;color:var(--good);margin-top:8px}
+.pad{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:360px}
+.pad button{font:600 14px var(--f-body);background:rgba(255,255,255,.12);color:var(--paper);border:1px solid rgba(255,255,255,.35);border-radius:99px;padding:7px 14px;cursor:pointer}
+.pad button:hover{background:rgba(255,255,255,.22)}
+.pad button:focus-visible{outline:2px solid var(--tag);outline-offset:2px}
+.padnote{font-size:13px;color:rgba(255,255,255,.75)}
+
+/* bo'limlar */
+section.blk{padding-block:72px}
+.eyebrow{font-family:var(--f-mono);font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--cobalt);font-weight:700;margin-bottom:12px;display:block}
+.blk h2{font-size:clamp(28px,4.6vw,44px);line-height:1.05;font-weight:800;max-width:20ch}
+
+/* og'riq */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:36px}
+.vs>div{border-radius:18px;padding:26px;min-width:0}
+.vs .old{background:var(--paper);border:2px dashed var(--line)}
+.vs .new{background:var(--ink);color:var(--paper)}
+.vs h3{font-size:18px;margin-bottom:16px}
+.vs ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.vs li{display:grid;grid-template-columns:24px 1fr;gap:10px}
+.vs .old li::before{content:"✕";color:var(--bad);font-weight:800}
+.vs .new li::before{content:"✓";color:var(--tag);font-weight:800}
+.vs .old li{color:var(--ink-soft)}
+
+/* imkoniyatlar */
+.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:36px}
+.feat{background:var(--paper);border-radius:18px;padding:24px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.feat .ico{width:46px;height:46px;border-radius:12px;background:var(--page);display:grid;place-items:center}
+.feat .ico svg{width:24px;height:24px;stroke:var(--cobalt);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.feat h3{font-size:19px}
+.feat p{color:var(--ink-soft);font-size:16px}
+.feat.hl{background:var(--tag)}
+.feat.hl .ico{background:rgba(255,255,255,.6)}
+.feat.hl p{color:var(--ink)}
+
+/* qadamlar */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:36px;counter-reset:s}
+.step{border-top:4px solid var(--cobalt);padding-top:16px;display:flex;flex-direction:column;gap:8px;counter-increment:s;min-width:0}
+.step::before{content:counter(s);font-family:var(--f-display);font-weight:900;font-size:44px;color:var(--cobalt);line-height:1}
+.step h3{font-size:18px}
+.step p{color:var(--ink-soft);font-size:16px}
+
+/* savollar */
+.faq{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:32px}
+details{background:var(--paper);border-radius:14px;padding:18px 20px;min-width:0}
+summary{cursor:pointer;font-weight:700;font-size:17px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--f-display);color:var(--cobalt)}
+details[open] summary::after{content:"–"}
+details p{margin-top:10px;color:var(--ink-soft)}
+summary:focus-visible{outline:2px solid var(--cobalt);outline-offset:4px;border-radius:4px}
+
+/* yakun */
+.final{background:var(--ink);color:var(--paper);border-radius:28px;padding:56px 32px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:20px;position:relative;overflow:hidden}
+.final h2{font-size:clamp(30px,5.4vw,54px);max-width:16ch;line-height:1.02}
+.final h2 span{color:var(--tag)}
+.final p{color:rgba(255,255,255,.8);max-width:46ch}
+.final .btn.ghost{border-color:rgba(255,255,255,.35)}
+footer{padding-block:28px 40px;color:var(--ink-soft);font-size:13px;text-align:center}
+
+@media (max-width:860px){
+  .herogrid{grid-template-columns:1fr;gap:40px}
+  .feats{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr 1fr}
+}
+@media (max-width:600px){
+  .vs,.faq,.feats,.steps{grid-template-columns:1fr}
+  section.blk{padding-block:52px}
+  .final{padding:40px 20px}
+  .topbar .btn{display:none}
+}
+@media (prefers-reduced-motion:reduce){.receipt,.receipt .ln.new{animation:none}.btn{transition:none}}
+</style>
+
+<header class="hero">
+  <div class="in">
+    <div class="topbar">
+      <div class="logo"><i></i>Daftarsiz do'kon</div>
+      <a class="btn ghost small" href="qollanma.html">Bepul qo'llanma</a>
+    </div>
+    <div class="herogrid">
+      <div>
+        <span class="kicker">Odoo bilan · kichik do'konlar uchun</span>
+        <h1>Daftar, kalkulyator va <mark>“esimda bor”</mark> ga xayr</h1>
+        <p class="sub">Kassa, ombor, qarzlar va foyda bitta dasturda. Har bir sotuv o'zi yoziladi, qoldiq o'zi kamayadi, kechqurun tushum tayyor turadi.</p>
+        <div class="cta">
+          <a class="btn yellow" href="https://www.odoo.com/trial" target="_blank" rel="noopener">Bepul sinab ko'rish →</a>
+          <a class="btn ghost" href="#qanday">Qanday ishlaydi</a>
+        </div>
+      </div>
+      <div class="receipt-wrap">
+        <div class="receipt" aria-live="polite">
+          <div class="shop">“BARAKA” MINIMARKET</div>
+          <div class="meta">Kassa #1 · Sotuvchi: Dilnoza</div>
+          <hr>
+          <div id="lines"></div>
+          <hr>
+          <div class="ln total"><span>JAMI</span><span id="total">0</span></div>
+          <div class="stock" id="stock">✓ Ombor qoldig'i yangilandi</div>
+        </div>
+        <div class="pad" id="pad" aria-label="Chekka tovar qo'shish">
+          <button type="button" data-n="Non" data-p="4000">+ Non</button>
+          <button type="button" data-n="Sut 1 L" data-p="14000">+ Sut</button>
+          <button type="button" data-n="Tuxum 10 ta" data-p="18000">+ Tuxum</button>
+          <button type="button" data-n="Choy 100 g" data-p="25000">+ Choy</button>
+          <button type="button" data-n="Shakar 1 kg" data-p="13000">+ Shakar</button>
+        </div>
+        <p class="padnote">Bosib ko'ring: kassa shunday tez ishlaydi</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="blk"><div class="in">
+    <span class="eyebrow">Tanish holatmi?</span>
+    <h2>Do'konda pul bor, lekin qancha foyda qilganingizni bilmaysiz</h2>
+    <div class="vs">
+      <div class="old">
+        <h3>Hozir</h3>
+        <ul>
+          <li>Qarzlar daftarda, daftar esa yo'qolib qoladi</li>
+          <li>Qaysi tovar tugaganini mijoz so'raganda bilasiz</li>
+          <li>Kechqurun kassadagi pul to'g'ri kelmaydi, sababi noma'lum</li>
+          <li>Ta'minotchiga qancha qarzingiz borligi faqat esingizda</li>
+          <li>Qaysi tovar foyda keltirayotganini taxmin qilasiz</li>
+        </ul>
+      </div>
+      <div class="new">
+        <h3>Odoo bilan</h3>
+        <ul>
+          <li>Har bir qarz mijoz nomi bilan, bir bosishda ko'rinadi</li>
+          <li>Tovar tugashidan oldin Odoo o'zi ogohlantiradi</li>
+          <li>Kassa yopilganda farqni va qaysi sotuvchida bo'lganini ko'rasiz</li>
+          <li>Ta'minotchilar bo'yicha hamma hisob tayyor turadi</li>
+          <li>Eng ko'p sotilgan va eng foydali tovarlar ro'yxati</li>
+        </ul>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="blk" id="qanday" style="padding-top:0"><div class="in">
+    <span class="eyebrow">Bitta dasturda hammasi</span>
+    <h2>Do'konga kerakli hamma narsa bir-biriga ulangan</h2>
+    <div class="feats">
+      <div class="feat hl">
+        <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M7 20h10M12 16v4"/></svg></div>
+        <h3>Kassa</h3><p>Skaner bilan tez sotuv, naqd va karta. Internet uzilsa ham ishlashda davom etadi.</p>
+      </div>
+      <div class="feat">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 9l9-5 9 5v10H3z"/><path d="M8 19v-6h8v6"/></svg></div>
+        <h3>Ombor</h3><p>Har bir tovardan nechta qolgani har doim aniq. Sotuvda o'zi kamayadi.</p>
+      </div>
+      <div class="feat">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 7h16l-2 10H6z"/><circle cx="9" cy="20" r="1"/><circle cx="16" cy="20" r="1"/><path d="M4 7L3 3"/></svg></div>
+        <h3>Xarid</h3><p>Ta'minotchiga buyurtma, tovarni qabul qilish va qarzlar bitta joyda.</p>
+      </div>
+      <div class="feat">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div>
+        <h3>Hisobotlar</h3><p>Kunlik tushum, foyda va eng ko'p sotilgan tovarlar grafiklarda.</p>
+      </div>
+      <div class="feat">
+        <div class="ico"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M17 11l2 2 3.5-4"/></svg></div>
+        <h3>Sotuvchilar</h3><p>Har biri kassaga o'z PIN-kodi bilan kiradi. Kim nima sotgani ko'rinadi.</p>
+      </div>
+      <div class="feat">
+        <div class="ico"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></svg></div>
+        <h3>Telefondan</h3><p>Do'konda bo'lmasangiz ham, telefonda bugungi savdoni ko'rasiz.</p>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="blk" style="padding-top:0"><div class="in">
+    <span class="eyebrow">Boshlash oson</span>
+    <h2>Bir kunda ishga tushiring</h2>
+    <div class="steps">
+      <div class="step"><h3>Ro'yxatdan o'ting</h3><p>Odoo saytida do'kon nomini yozasiz. Dastur o'rnatish shart emas, brauzerda ishlaydi.</p></div>
+      <div class="step"><h3>Tovarlarni kiriting</h3><p>Bittalab yoki Excel ro'yxatingizni bir martada yuklab.</p></div>
+      <div class="step"><h3>Qoldiqni sanang</h3><p>Do'kondagi hozirgi tovarlarni bir marta sanab kiritasiz.</p></div>
+      <div class="step"><h3>Soting</h3><p>Kassani oching. Qolganini Odoo o'zi hisoblaydi.</p></div>
+    </div>
+  </div></section>
+
+  <section class="blk" style="padding-top:0"><div class="in">
+    <span class="eyebrow">Ko'p so'raladi</span>
+    <h2>Savollar</h2>
+    <div class="faq">
+      <details><summary>Kompyuterni yaxshi bilmayman, eplay olamanmi?</summary><p>Ha. Kassa ekrani oddiy: tovar rasmi ustiga bosasiz, keyin “To'lash”. Bepul o'zbekcha qo'llanmamiz ham bor.</p></details>
+      <details><summary>Internet uzilib qolsa nima bo'ladi?</summary><p>Kassa ishlashda davom etadi. Internet qaytgach, sotuvlar o'zi yuboriladi.</p></details>
+      <details><summary>Qanday uskuna kerak?</summary><p>Kompyuter, noutbuk yoki planshet yetadi. Shtrix-kod skaner va chek printer bo'lsa yanada qulay, lekin boshlash uchun shart emas.</p></details>
+      <details><summary>Qaysi tilda ishlaydi?</summary><p>Rus va ingliz tilida to'liq ishlaydi. Valyutani so'm (UZS) qilib qo'yasiz.</p></details>
+      <details><summary>Bir nechta do'konim bor-chi?</summary><p>Har biriga alohida kassa ochasiz. Hammasining hisobotini bitta joyda ko'rasiz.</p></details>
+      <details><summary>Keyin internet-do'kon ochsa bo'ladimi?</summary><p>Ha. Internet-do'kon ham shu omborga ulanadi, qoldiq hamma joyda bir xil bo'ladi.</p></details>
+    </div>
+  </div></section>
+
+  <section class="blk" style="padding-top:0"><div class="in">
+    <div class="final">
+      <h2>Do'koningizni <span>raqamlar</span> bilan boshqaring</h2>
+      <p>Bugun sinab ko'ring. Bir hafta ichida qaysi tovar foyda keltirayotganini aniq bilasiz.</p>
+      <div class="cta" style="justify-content:center;margin-top:0">
+        <a class="btn yellow" href="https://www.odoo.com/trial" target="_blank" rel="noopener">Bepul sinab ko'rish →</a>
+        <a class="btn ghost" href="qollanma.html">O'zbekcha qo'llanma</a>
+      </div>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="in">Odoo — Odoo S.A. kompaniyasining savdo belgisi. Bu sahifa mustaqil tayyorlangan, Odoo S.A. bilan bog'liq emas. Chekdagi do'kon va narxlar misol uchun.</div></footer>
+
+<script>
+(function(){
+  var items=[["Non",4000],["Sut 1 L",14000],["Choy 100 g",25000]];
+  var lines=document.getElementById('lines'),totalEl=document.getElementById('total'),stock=document.getElementById('stock');
+  var fmt=function(n){return n.toLocaleString('ru-RU').replace(/ /g,' ')+" so'm"};
+  function render(flashLast){
+    lines.innerHTML='';var t=0;
+    items.forEach(function(it,i){var d=document.createElement('div');d.className='ln'+(flashLast&&i===items.length-1?' new':'');
+      var a=document.createElement('span');a.textContent=it[0];var b=document.createElement('span');b.textContent=fmt(it[1]);
+      d.appendChild(a);d.appendChild(b);lines.appendChild(d);t+=it[1]});
+    totalEl.textContent=fmt(t);
+  }
+  document.getElementById('pad').addEventListener('click',function(e){
+    var b=e.target.closest('button');if(!b)return;
+    items.push([b.dataset.n,+b.dataset.p]);if(items.length>7)items.shift();
+    render(true);stock.textContent='✓ '+b.dataset.n+': ombordan 1 ta ayirildi';
+  });
+  render(false);
+})();
+</script>
+
+</html>
