@@ -106,7 +106,7 @@ a{color:var(--accent)}
     <span class="eyebrow">Boshlovchilar uchun · Kichik do'kon</span>
     <h1>Odoo do'kon maktabi</h1>
     <p class="lead">Odoo'da 40 dan ortiq bo'lim bor, lekin kichik do'konga ularning 6–7 tasi kifoya. Bu qo'llanmada faqat shu bo'limlar bor: har biri nima qiladi, qayerdan topiladi va birinchi navbatda nimani sozlash kerak.</p>
-    <div class="progress"><div class="bar"><i id="bar"></i></div><span id="ptext">0 / 8 dars o'qildi</span></div>
+    <div class="progress"><div class="bar"><i id="bar"></i></div><span id="ptext">0 / 11 dars o'qildi</span></div>
   </section>
 
   <section class="section">
@@ -317,6 +317,95 @@ a{color:var(--accent)}
   </article>
 
   <!-- 8 -->
+  <article class="mod" id="qaytarish" data-title="Qaytarish va chegirma" data-tag="useful">
+    <header>
+      <div class="titlerow"><h2>Qaytarish, chegirma va aksiyalar</h2><span class="tag useful">Foydali</span></div>
+      <p class="names">Menyuda: <code>Point of Sale → Refund</code>, <code>Products → Pricelists</code> · <code>Возврат</code>, <code>Прайс-листы</code></p>
+    </header>
+    <p>Mijoz tovarni qaytarib olib keldi yoki doimiy xaridorga arzonroq berasiz. Bularni to'g'ri kiritsangiz, kassadagi pul ham, ombordagi qoldiq ham to'g'ri bo'lib qoladi.</p>
+    <div class="cols">
+      <div><div class="lbl">Tovarni qaytarish</div>
+        <ol>
+          <li>Kassa ekranida <b>Refund</b> (yoki Orders → eski chek) ni bosing</li>
+          <li>Mijozning chekini toping: sana, raqam yoki mijoz nomi bo'yicha</li>
+          <li>Qaytgan tovar va sonini tanlang</li>
+          <li><b>Payment</b> → pulni qaytaring → <b>Validate</b></li>
+        </ol>
+        <p style="margin-top:8px">Tovar omborga o'zi qaytadi, pul kassadan ayiriladi.</p>
+      </div>
+      <div><div class="lbl">Chegirma turlari</div>
+        <ul>
+          <li><b>Bitta tovarga:</b> kassada tovarni tanlab, <b>% Disc</b> tugmasi</li>
+          <li><b>Butun chekka:</b> Settings'da <b>Global Discounts</b> ni yoqing</li>
+          <li><b>Ulgurji narx:</b> <b>Pricelists</b>, masalan “10 tadan ko'p olsa, 5% arzon”</li>
+          <li><b>Aksiya va bonus:</b> <b>Promotions / Loyalty</b>, masalan “2 ta olsang, 1 tasi bepul”</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tip"><b>Maslahat</b>Sotuvchilar istalgancha chegirma qila olmasligi uchun <span class="path">POS Settings → Restrict Price Modifications</span> ni yoqing. Shunda chegirmani faqat menejer bera oladi.</div>
+    <button class="donebtn" type="button" aria-pressed="false">O'qib chiqdim</button>
+  </article>
+
+  <!-- 9 -->
+  <article class="mod" id="qarz" data-title="Qarzga savdo" data-tag="useful">
+    <header>
+      <div class="titlerow"><h2>Qarzga savdo (nasiya)</h2><span class="tag useful">Foydali</span></div>
+      <p class="names">Menyuda: <code>POS → Payment Methods → Customer Account</code> · <code>Счёт клиента</code></p>
+    </header>
+    <p>Mahalla do'konlarida eng ko'p uchraydigan holat. Daftar o'rniga har bir qarz mijoz nomi bilan Odoo'da yoziladi va hech qachon yo'qolmaydi.</p>
+    <div class="cols">
+      <div><div class="lbl">Sozlash (bir marta)</div>
+        <ol>
+          <li><span class="path">Point of Sale → Configuration → Payment Methods → New</span></li>
+          <li>Nomi: “Nasiya”, turi: <b>Customer Account</b></li>
+          <li>Uni kassangizga qo'shing</li>
+          <li>Qarzga oladigan mijozlarni Kontaktlarga kiriting</li>
+        </ol>
+      </div>
+      <div><div class="lbl">Har kuni</div>
+        <ul>
+          <li>Sotishda avval <b>Customer</b> tugmasi bilan mijozni tanlang, to'lovda “Nasiya” ni bosing</li>
+          <li>Mijoz qarzini to'lasa: Invoicing → mijoz → <b>Register Payment</b></li>
+          <li>Kim qancha qarzligini ko'rish: <span class="path">Invoicing → Reporting → Aged Receivable</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="tip"><b>Maslahat</b>Mijoz kartasida <b>Credit Limit</b> qo'ysangiz, qarz shu chegaradan oshganda Odoo ogohlantiradi. Bu imkoniyat avval Invoicing sozlamalarida yoqiladi.</div>
+    <button class="donebtn" type="button" aria-pressed="false">O'qib chiqdim</button>
+  </article>
+
+  <!-- 10 -->
+  <article class="mod" id="hisobot" data-title="Hisobotlar" data-tag="must">
+    <header>
+      <div class="titlerow"><h2>Hisobotlarni o'qish</h2><span class="tag must">Majburiy</span></div>
+      <p class="names">Har bir bo'limda: <code>Reporting</code> · <code>Отчётность</code></p>
+    </header>
+    <p>Odoo'ni ishlatishdan asosiy foyda shu. Hisobotlar sizga qaysi tovar pul keltirayotganini, qaysi tovar esa javonda changlanib yotganini ko'rsatadi.</p>
+    <div class="cols">
+      <div><div class="lbl">Eng kerakli 5 ta hisobot</div>
+        <ul>
+          <li><span class="path">POS → Reporting → Orders</span>: kunlik va oylik tushum</li>
+          <li>O'sha joyda <b>Group By → Product</b>: eng ko'p sotilgan tovarlar</li>
+          <li><span class="path">Inventory → Reporting → Stock</span>: hozirgi qoldiq</li>
+          <li><span class="path">Inventory → Reporting → Valuation</span>: ombordagi tovar necha pullik</li>
+          <li><span class="path">Invoicing → Reporting → Profit and Loss</span>: sof foyda</li>
+        </ul>
+      </div>
+      <div><div class="lbl">Hisobot tugmalari</div>
+        <ul>
+          <li><b>Filters:</b> sana, kassa yoki sotuvchi bo'yicha ajratish</li>
+          <li><b>Group By:</b> kun, tovar yoki kategoriya bo'yicha guruhlash</li>
+          <li><b>Graph / Pivot:</b> grafik yoki jadval ko'rinishi</li>
+          <li><b>Favorites → Save:</b> sozlangan hisobotni saqlab qo'yish</li>
+          <li><b>⬇ Download (xlsx):</b> Excel'ga yuklab olish</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tip"><b>Maslahat</b>Har dushanba 10 daqiqa ajrating: o'tgan haftada eng ko'p va eng kam sotilgan 10 ta tovarni ko'ring. Kam sotilganini kamroq oling, ko'p sotilganini tugatib qo'ymang.</div>
+    <button class="donebtn" type="button" aria-pressed="false">O'qib chiqdim</button>
+  </article>
+
+  <!-- 11 -->
   <article class="mod" id="keyinroq" data-title="Keyinroq kerak bo'ladiganlar" data-tag="later">
     <header>
       <div class="titlerow"><h2>Keyinroq o'rganadiganlar</h2><span class="tag later">Keyinroq</span></div>
@@ -350,6 +439,37 @@ a{color:var(--accent)}
   </section>
 
   <section class="section">
+    <h2>Qanday uskuna kerak</h2>
+    <p>Odoo brauzerda ishlaydi, maxsus kompyuter shart emas. Boshlash uchun bitta noutbuk yoki planshet yetadi, qolganini keyin qo'shasiz.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Uskuna</th><th>Kerakmi</th><th>Izoh</th></tr></thead>
+      <tbody>
+        <tr><td>Kompyuter yoki planshet</td><td>Shart</td><td>Chrome brauzeri bo'lsa yetadi. Planshetda ekranga barmoq bilan bosiladi</td></tr>
+        <tr><td>Internet</td><td>Shart</td><td>Uzilib qolsa, kassa ishlashda davom etadi va keyin ma'lumotlarni yuboradi</td></tr>
+        <tr><td>Shtrix-kod skaner (USB)</td><td>Juda foydali</td><td>Klaviatura kabi ulanadi, sozlash talab qilmaydi</td></tr>
+        <tr><td>Chek printer</td><td>Ixtiyoriy</td><td>Oddiy usulda brauzer orqali chop etadi. Avtomatik chop etish uchun Odoo IoT Box yoki ePOS (Epson) printer kerak</td></tr>
+        <tr><td>Pul qutisi</td><td>Ixtiyoriy</td><td>Odatda chek printerga ulanadi va to'lovda o'zi ochiladi</td></tr>
+        <tr><td>Telefon</td><td>Foydali</td><td>Odoo ilovasi orqali do'konda bo'lmasangiz ham savdoni ko'rasiz</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="section">
+    <h2>Ko'p uchraydigan muammolar</h2>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Muammo</th><th>Sababi</th><th>Yechimi</th></tr></thead>
+      <tbody>
+        <tr><td>Tovar kassada ko'rinmayapti</td><td>Kartada “Available in POS” belgisi yo'q</td><td>Tovar kartasini oching → Point of Sale yorlig'i → belgilang</td></tr>
+        <tr><td>Qoldiq minusga ketdi</td><td>Birinchi sanash qilinmagan yoki kirim kiritilmagan</td><td>Physical Inventory orqali haqiqiy sonni kiriting</td></tr>
+        <tr><td>Qoldiq umuman sanalmayapti</td><td>Tovar turida “Track Inventory” yoqilmagan</td><td>Tovar kartasida Track Inventory belgisini qo'ying</td></tr>
+        <tr><td>Kassada eski narx chiqyapti</td><td>Kassa sahifasi yangilanmagan yoki narx ro'yxati (Pricelist) boshqa narx beryapti</td><td>Kassa sahifasini qayta yuklang (F5), Pricelist'ni tekshiring</td></tr>
+        <tr><td>Kassa yopilmayapti</td><td>Internet uzilganda qilingan savdolar hali yuborilmagan</td><td>Internetni tekshiring, yuqoridagi sinxronlash belgisi tugashini kuting</td></tr>
+        <tr><td>Kechqurun pul to'g'ri kelmayapti</td><td>Qaytarish yoki qarz noto'g'ri kiritilgan</td><td>POS → Orders'da kunlik cheklarni to'lov usuli bo'yicha guruhlab tekshiring</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="section">
     <h2>Lug'at</h2>
     <p>Odoo interfeysi o'zbek tilida to'liq emas, shuning uchun ko'p so'zlar inglizcha yoki ruscha chiqadi.</p>
     <div class="tablewrap"><table>
@@ -365,6 +485,12 @@ a{color:var(--accent)}
         <tr><td>Register / Session</td><td>Сессия кассы</td><td>Kassa smenasi</td></tr>
         <tr><td>Validate</td><td>Подтвердить</td><td>Tasdiqlash</td></tr>
         <tr><td>Reordering Rule</td><td>Правило пополнения</td><td>Minimal qoldiq qoidasi</td></tr>
+        <tr><td>Refund</td><td>Возврат</td><td>Qaytarish</td></tr>
+        <tr><td>Discount</td><td>Скидка</td><td>Chegirma</td></tr>
+        <tr><td>Pricelist</td><td>Прайс-лист</td><td>Narx ro'yxati (ulgurji, aksiya)</td></tr>
+        <tr><td>Customer Account</td><td>Счёт клиента</td><td>Nasiya, mijoz qarzi</td></tr>
+        <tr><td>Group By</td><td>Группировать</td><td>Guruhlash (hisobotda)</td></tr>
+        <tr><td>Valuation</td><td>Оценка запасов</td><td>Ombordagi tovar qiymati</td></tr>
       </tbody>
     </table></div>
   </section>
