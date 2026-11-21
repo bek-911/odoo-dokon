@@ -6,536 +6,588 @@
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Odoo do'kon maktabi</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800;900&family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
 <style>
-/* Layout: kirish + tovar oqimi lentasi, so'ng har modul uchun dars kartasi; o'qilgan darslar belgilanadi */
+/* Layout: kobalt hero (sarlavha + progress kartasi) → tovar yo'li → chap tomonda yopishqoq mundarija, o'ngda darslar.
+   Telefonda mundarija tepaga tushadi. Reklama sayti bilan bir xil brend: kobalt + narx-yorliq sarig'i. */
 :root{
-  --bg:#f4f6f3; --surface:#ffffff; --fg:#17211c; --muted:#56635b; --line:#dbe2dc;
-  --accent:#0f7a5c; --accent-soft:#dcefe7; --must:#0f7a5c; --must-soft:#dcefe7;
-  --useful:#2c5fa8; --useful-soft:#e2ebf7; --later:#8a5a12; --later-soft:#f6ebd8; --tip:#fff7e0; --tip-line:#e8cf86;
-  --f-display:"Bricolage Grotesque",system-ui,"Segoe UI",sans-serif;
-  --f-body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --bg:#eef0fb; --surface:#ffffff; --surface-2:#f6f7fd; --fg:#0d1330; --muted:#525a7a; --line:#dde1f3;
+  --cobalt:#1a35e0; --cobalt-ink:#1a35e0; --cobalt-soft:#e4e8ff; --tag:#ffd23f; --tag-ink:#0d1330; --tag-soft:#fff4c7;
+  --must:#1a35e0; --must-soft:#e4e8ff; --useful:#0d8a5f; --useful-soft:#dcf3e8; --later:#9a5b00; --later-soft:#fbecd2;
+  --hero-fg:#ffffff;
+  --f-display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --f-body:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#111715; --surface:#19211e; --fg:#e7eee9; --muted:#9aaba1; --line:#2b3631;
-  --accent:#5fd0a8; --accent-soft:#183a2e; --must:#5fd0a8; --must-soft:#183a2e;
-  --useful:#8db6f0; --useful-soft:#1c2a40; --later:#e6b566; --later-soft:#3a2c14; --tip:#2a2615; --tip-line:#5c5124; color-scheme:dark}}
+  --bg:#0c1026; --surface:#151a38; --surface-2:#1b2146; --fg:#e8ebff; --muted:#a3a9cc; --line:#262d57;
+  --cobalt:#2a44ee; --cobalt-ink:#9fb0ff; --cobalt-soft:#1f2963; --tag:#ffd23f; --tag-ink:#0d1330; --tag-soft:#3a3214;
+  --must:#9fb0ff; --must-soft:#1f2963; --useful:#62d6a6; --useful-soft:#123528; --later:#f0b35c; --later-soft:#3a2b12; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#111715; --surface:#19211e; --fg:#e7eee9; --muted:#9aaba1; --line:#2b3631;
-  --accent:#5fd0a8; --accent-soft:#183a2e; --must:#5fd0a8; --must-soft:#183a2e;
-  --useful:#8db6f0; --useful-soft:#1c2a40; --later:#e6b566; --later-soft:#3a2c14; --tip:#2a2615; --tip-line:#5c5124; color-scheme:dark}
+  --bg:#0c1026; --surface:#151a38; --surface-2:#1b2146; --fg:#e8ebff; --muted:#a3a9cc; --line:#262d57;
+  --cobalt:#2a44ee; --cobalt-ink:#9fb0ff; --cobalt-soft:#1f2963; --tag:#ffd23f; --tag-ink:#0d1330; --tag-soft:#3a3214;
+  --must:#9fb0ff; --must-soft:#1f2963; --useful:#62d6a6; --useful-soft:#123528; --later:#f0b35c; --later-soft:#3a2b12; color-scheme:dark}
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.6;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.wrap{max-width:860px;margin:0 auto;padding-block:40px 72px;display:flex;flex-direction:column;gap:48px}
-h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
-h1{font-size:clamp(32px,7vw,52px);line-height:1.05;font-weight:800;letter-spacing:-.02em}
-h2{font-size:clamp(24px,4.5vw,30px);font-weight:800;line-height:1.15}
-h3{font-size:18px;font-weight:600}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:17px;line-height:1.6}
+.in{max-width:1160px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance;letter-spacing:-.01em}
 p{margin:0;max-width:65ch}
-.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700}
-.hero{display:flex;flex-direction:column;gap:14px}
-.lead{font-size:18px;color:var(--muted)}
-.progress{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:6px}
-.bar{flex:1 1 200px;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
-.bar>i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
-.progress span{font-weight:600;font-variant-numeric:tabular-nums;color:var(--muted);font-size:14px}
+a{color:var(--cobalt-ink)}
+svg.i{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
 
-/* oqim */
-.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;align-items:stretch}
-.flow .st{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:4px;position:relative;min-width:0}
-.flow .st b{font-family:var(--f-display);font-size:16px}
-.flow .st small{color:var(--muted);font-size:13px;line-height:1.4}
-.flow .st .n{font-family:var(--f-mono);font-size:12px;color:var(--accent)}
-@media (max-width:720px){.flow{grid-template-columns:1fr 1fr}}
-@media (max-width:420px){.flow{grid-template-columns:1fr}}
+/* HERO */
+.hero{background:var(--cobalt);color:var(--hero-fg);margin-top:calc(-1 * env(safe-area-inset-top,0px));padding-top:calc(env(safe-area-inset-top,0px) + 28px);padding-bottom:88px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 90% 0%,rgba(255,255,255,.16),transparent 45%),radial-gradient(circle at 0% 100%,rgba(5,12,90,.55),transparent 55%);pointer-events:none}
+.hero .in{position:relative}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:48px}
+.logo{font-family:var(--f-display);font-weight:800;font-size:17px;display:flex;align-items:center;gap:8px}
+.logo i{width:20px;height:20px;background:var(--tag);border-radius:4px 50% 50% 4px;display:inline-block;transform:rotate(-12deg)}
+.badge{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;background:rgba(255,255,255,.15);padding:6px 12px;border-radius:99px}
+.herogrid{display:grid;grid-template-columns:1.3fr .7fr;gap:40px;align-items:end}
+.herogrid>div{min-width:0}
+.hero h1{font-size:clamp(38px,7vw,72px);line-height:1;font-weight:900}
+.hero h1 mark{background:var(--tag);color:var(--tag-ink);padding:0 .12em;border-radius:8px}
+.hero .lead{font-size:clamp(17px,2.1vw,20px);margin-top:20px;color:rgba(255,255,255,.9);max-width:46ch}
+.stats{display:flex;gap:28px;flex-wrap:wrap;margin-top:28px}
+.stats div{display:flex;flex-direction:column}
+.stats b{font-family:var(--f-display);font-size:32px;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+.stats small{color:rgba(255,255,255,.75);font-size:14px}
+.pcard{background:var(--surface);color:var(--fg);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:14px;box-shadow:0 24px 50px rgba(5,10,60,.3)}
+.pcard .lbl{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.pcard .num{font-family:var(--f-display);font-weight:900;font-size:44px;line-height:1;font-variant-numeric:tabular-nums}
+.pcard .num small{font-size:20px;color:var(--muted);font-weight:600}
+.bar{height:12px;border-radius:99px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden}
+.bar>i{display:block;height:100%;width:0;background:var(--tag);transition:width .4s}
+.pcard p{font-size:15px;color:var(--muted)}
+.pcard a{display:inline-flex;justify-content:center;font-weight:700;text-decoration:none;background:var(--cobalt);color:#fff;border-radius:12px;padding:12px 16px}
 
-/* indeks */
-.legend{display:flex;gap:10px;flex-wrap:wrap}
-.tag{display:inline-flex;align-items:center;font-size:12px;font-weight:700;padding:2px 10px;border-radius:99px;white-space:nowrap}
+/* yo'l */
+.route{margin-top:-52px;position:relative;z-index:2}
+.route .track{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px;display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.stop{display:flex;flex-direction:column;gap:6px;position:relative;min-width:0;padding-right:18px}
+.stop:not(:last-child)::after{content:"→";position:absolute;right:0;top:10px;color:var(--muted);font-weight:700}
+.stop .ic{width:44px;height:44px;border-radius:12px;background:var(--cobalt-soft);color:var(--cobalt-ink);display:grid;place-items:center}
+.stop b{font-size:15px;line-height:1.3}
+.stop small{font-size:13px;color:var(--muted);line-height:1.35}
+.stop .k{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--cobalt-ink)}
+
+/* asosiy joylashuv */
+.layout{display:grid;grid-template-columns:260px 1fr;gap:36px;padding-block:48px 72px;align-items:start}
+.layout>*{min-width:0}
+.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);display:flex;flex-direction:column;gap:4px;max-height:calc(100vh - 32px);overflow:auto;padding-right:4px}
+.toc .ttl{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 8px 10px}
+.toc a{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:center;padding:8px 10px;border-radius:10px;color:var(--fg);text-decoration:none;font-weight:600;font-size:15px;line-height:1.3}
+.toc a:hover{background:var(--surface)}
+.toc a .n{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-family:var(--f-mono);background:var(--surface);border:1px solid var(--line);color:var(--muted)}
+.toc a.done .n{background:var(--tag);border-color:var(--tag);color:var(--tag-ink)}
+.toc a.done .n::before{content:"✓"}
+.toc a.done .n span{display:none}
+.toc .sep{height:1px;background:var(--line);margin:10px}
+.toc a.extra{grid-template-columns:1fr;padding-left:46px;font-weight:500;color:var(--muted)}
+.content{display:flex;flex-direction:column;gap:28px}
+.toc a:focus-visible,.donebtn:focus-visible,summary:focus-visible,.pcard a:focus-visible,#q:focus-visible{outline:3px solid var(--tag);outline-offset:2px}
+
+/* dars */
+.lesson{background:var(--surface);border:1px solid var(--line);border-radius:22px;overflow:hidden;scroll-margin-top:16px}
+.lesson .head{display:grid;grid-template-columns:56px 1fr auto;gap:16px;align-items:center;padding:22px 24px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+.lesson .head>div{min-width:0}
+.lesson .ic{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:var(--cobalt);color:#fff}
+.lesson[data-tag="useful"] .ic{background:var(--useful)}
+.lesson[data-tag="later"] .ic{background:var(--later)}
+.lesson .ic svg.i{width:28px;height:28px}
+.lesson .no{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.lesson h2{font-size:clamp(20px,3vw,26px);font-weight:800;line-height:1.15}
+.tag{display:inline-flex;font-size:12px;font-weight:700;padding:4px 12px;border-radius:99px;white-space:nowrap}
 .tag.must{background:var(--must-soft);color:var(--must)}
 .tag.useful{background:var(--useful-soft);color:var(--useful)}
 .tag.later{background:var(--later-soft);color:var(--later)}
-.index{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px}
-.index a{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;color:var(--fg);text-decoration:none;font-weight:600}
-.index a:hover{border-color:var(--accent)}
-.index a.done{opacity:.6}
-.index a.done .t::before{content:"✓ ";color:var(--accent)}
+.lesson .body{padding:24px;display:flex;flex-direction:column;gap:20px}
+.lesson .intro{font-size:18px}
+.menu{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14px;color:var(--muted)}
+.crumbs{display:inline-flex;flex-wrap:wrap;align-items:center;gap:4px}
+.crumbs i{font-style:normal;font-family:var(--f-mono);font-size:13px;background:var(--cobalt-soft);color:var(--cobalt-ink);padding:2px 8px;border-radius:6px}
+.crumbs i+i{margin-left:12px;position:relative}
+.crumbs i+i::before{content:"›";position:absolute;left:-11px;color:var(--muted);font-family:var(--f-body)}
+.ru{font-family:var(--f-mono);font-size:13px;border:1px dashed var(--line);padding:2px 8px;border-radius:6px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cols>div{min-width:0;background:var(--surface-2);border-radius:16px;padding:18px}
+.lbl{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--cobalt-ink);font-weight:700;margin-bottom:10px}
+ul,ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:7px}
+ol.num{list-style:none;padding:0;counter-reset:n}
+ol.num>li{counter-increment:n;position:relative;padding-left:34px}
+ol.num>li::before{content:counter(n);position:absolute;left:0;top:2px;width:24px;height:24px;border-radius:50%;background:var(--cobalt);color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center}
+.note{display:grid;grid-template-columns:auto 1fr;gap:14px;background:var(--tag-soft);border-radius:16px;padding:16px 18px;border-left:0}
+.note .em{width:36px;height:36px;border-radius:10px;background:var(--tag);color:var(--tag-ink);display:grid;place-items:center;font-weight:900;font-family:var(--f-display)}
+.note b{display:block;margin-bottom:2px}
+.donebtn{align-self:flex-start;display:inline-flex;gap:8px;align-items:center;font:700 15px var(--f-body);border:2px solid var(--line);background:var(--surface);color:var(--fg);border-radius:99px;padding:8px 18px;cursor:pointer}
+.donebtn[aria-pressed="true"]{background:var(--tag);color:var(--tag-ink);border-color:var(--tag)}
 
-/* modul */
-.mod{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:18px;scroll-margin-top:16px}
-.mod header{display:flex;flex-direction:column;gap:8px}
-.mod .titlerow{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-.names{font-size:14px;color:var(--muted)}
-.names code{font-family:var(--f-mono);font-size:12.5px;background:var(--bg);border:1px solid var(--line);padding:1px 6px;border-radius:4px}
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-@media (max-width:640px){.cols{grid-template-columns:1fr}}
-.cols>div{min-width:0}
-.lbl{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:6px}
-ul,ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:5px}
-.path{font-family:var(--f-mono);font-size:13px;color:var(--accent);word-break:break-word}
-.tip{background:var(--tip);border:1px solid var(--tip-line);border-radius:10px;padding:12px 14px;font-size:15px}
-.tip b{display:block;margin-bottom:2px}
-.donebtn{align-self:flex-start;display:inline-flex;gap:8px;align-items:center;font:600 14px var(--f-body);border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:99px;padding:6px 14px;cursor:pointer}
-.donebtn[aria-pressed="true"]{background:var(--accent);color:var(--surface);border-color:var(--accent)}
-.donebtn:focus-visible,.index a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* kassa maketi */
+.pos{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2)}
+.pos .bar2{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;background:var(--fg);color:var(--bg);font-size:13px;font-family:var(--f-mono)}
+.pos .scr{display:grid;grid-template-columns:1fr 1.3fr;min-height:220px}
+.pos .order{background:var(--surface);border-right:1px solid var(--line);padding:12px;display:flex;flex-direction:column;gap:6px;font-size:14px;min-width:0}
+.pos .order .r{display:flex;justify-content:space-between;gap:8px;font-variant-numeric:tabular-nums}
+.pos .order .t{margin-top:auto;border-top:1px dashed var(--line);padding-top:8px;font-weight:800;font-size:16px}
+.pos .pay{background:var(--useful);color:#fff;text-align:center;border-radius:8px;padding:8px;font-weight:700;margin-top:6px}
+.pos .grid{padding:12px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;align-content:start;min-width:0}
+.pos .p{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 8px;display:flex;flex-direction:column;gap:2px;font-size:13px;min-width:0}
+.pos .p .e{font-size:22px}
+.pos .p small{color:var(--muted);font-variant-numeric:tabular-nums}
+.pos figcaption{font-size:13px;color:var(--muted);padding:8px 14px;border-top:1px solid var(--line)}
+
+/* bo'lim sarlavhalari */
+.sec{display:flex;flex-direction:column;gap:16px;scroll-margin-top:16px;margin-top:20px}
+.sec h2{font-size:clamp(24px,3.6vw,32px);font-weight:800}
+.sec .eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--cobalt-ink);font-weight:700}
 
 /* kun */
-.day{display:flex;flex-direction:column;gap:10px}
-.day .row{display:grid;grid-template-columns:110px 1fr;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
-.day .row:last-child{border-bottom:0}
-.day .row b{font-family:var(--f-display);color:var(--accent)}
-@media (max-width:480px){.day .row{grid-template-columns:1fr;gap:2px}}
+.day{display:flex;flex-direction:column;position:relative;padding-left:28px}
+.day::before{content:"";position:absolute;left:8px;top:8px;bottom:8px;width:2px;background:var(--line)}
+.day .r{position:relative;padding:0 0 18px}
+.day .r::before{content:"";position:absolute;left:-26px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--tag);border:3px solid var(--bg)}
+.day .r b{font-family:var(--f-mono);font-size:13px;color:var(--cobalt-ink);display:block}
+.day .r span{display:block}
 
-.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
-table{border-collapse:collapse;width:100%;min-width:560px;font-size:15px}
-th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
-th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+/* uskunalar */
+.gear{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.gear div{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.gear .e{font-size:26px}
+.gear b{font-size:16px}
+.gear small{color:var(--muted);font-size:14px;line-height:1.45}
+
+/* muammolar */
+.faq{display:flex;flex-direction:column;gap:10px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 18px}
+summary{cursor:pointer;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--f-display);color:var(--cobalt-ink)}
+details[open] summary::after{content:"–"}
+details .ans{display:grid;grid-template-columns:110px 1fr;gap:6px 12px;margin-top:12px;font-size:16px}
+details .ans dt{font-family:var(--f-mono);font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding-top:3px}
+details .ans dd{margin:0}
+
+/* lug'at */
+.search{display:flex;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px 14px}
+.search input{flex:1;min-width:0;border:0;background:transparent;color:var(--fg);font:500 16px var(--f-body);padding:10px 0;outline:none}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:15px}
+th,td{text-align:left;padding:10px 16px;border-bottom:1px solid var(--line)}
+th{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
 tr:last-child td{border-bottom:0}
 td:first-child{font-weight:700}
-.section{display:flex;flex-direction:column;gap:16px}
-footer{color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding-top:16px}
-a{color:var(--accent)}
-@media (prefers-reduced-motion:reduce){.bar>i{transition:none}}
+.empty{padding:16px;color:var(--muted)}
+
+/* tartib */
+.path{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;counter-reset:p}
+.path div{counter-increment:p;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;gap:12px;align-items:flex-start;min-width:0}
+.path div::before{content:counter(p);font-family:var(--f-display);font-weight:900;font-size:28px;color:var(--cobalt-ink);line-height:1}
+.links{display:flex;flex-wrap:wrap;gap:10px}
+.links a{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 16px;text-decoration:none;font-weight:600}
+footer{color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding-block:20px 40px}
+
+@media (max-width:960px){
+  .herogrid{grid-template-columns:1fr}
+  .layout{grid-template-columns:1fr}
+  .toc{position:static;max-height:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:12px}
+  .toc .ttl{grid-column:1/-1}
+  .toc .sep,.toc a.extra{display:none}
+  .route .track{grid-template-columns:repeat(3,1fr)}
+  .stop:nth-child(3)::after{display:none}
+  .gear,.path{grid-template-columns:1fr 1fr}
+}
+@media (max-width:620px){
+  .cols,.gear,.path{grid-template-columns:1fr}
+  .route .track{grid-template-columns:1fr 1fr}
+  .stop::after{display:none}
+  .lesson .head{grid-template-columns:48px 1fr;padding:18px}
+  .lesson .head .tag{grid-column:2;justify-self:start}
+  .lesson .ic{width:48px;height:48px}
+  .lesson .body{padding:18px}
+  .pos .scr{grid-template-columns:1fr}
+  .pos .order{border-right:0;border-bottom:1px solid var(--line)}
+  details .ans{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bar>i{transition:none}}
 </style>
 
-<div class="wrap">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18.5 14.8c1.7.8 2.7 2.6 3 5.2"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"/><circle cx="8" cy="8" r="1.5"/></symbol>
+  <symbol id="i-pos" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M7 20h10M12 16v4M7 8h6M7 11h4"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M3 8l9-5 9 5v8l-9 5-9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 4h2l2 11h11l2-8H6"/><circle cx="9" cy="19" r="1.3"/><circle cx="17" cy="19" r="1.3"/></symbol>
+  <symbol id="i-coin" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></symbol>
+  <symbol id="i-badge" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M8 17c.7-1.6 2.2-2.5 4-2.5s3.3.9 4 2.5"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4z"/><path d="M20 4h-4a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h5z"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+</svg>
 
-  <section class="hero">
-    <span class="eyebrow">Boshlovchilar uchun · Kichik do'kon</span>
-    <h1>Odoo do'kon maktabi</h1>
-    <p class="lead">Odoo'da 40 dan ortiq bo'lim bor, lekin kichik do'konga ularning 6–7 tasi kifoya. Bu qo'llanmada faqat shu bo'limlar bor: har biri nima qiladi, qayerdan topiladi va birinchi navbatda nimani sozlash kerak.</p>
-    <div class="progress"><div class="bar"><i id="bar"></i></div><span id="ptext">0 / 11 dars o'qildi</span></div>
-  </section>
-
-  <section class="section">
-    <h2>Tovar do'konda qanday yuradi</h2>
-    <p>Odoo bo'limlari bir-biriga ulangan. Bitta tovarning yo'li 5 bosqichdan o'tadi va har bosqich o'z bo'limida yoziladi:</p>
-    <div class="flow">
-      <div class="st"><span class="n">1 · Xarid</span><b>Ta'minotchidan buyurtma</b><small>Purchase bo'limida buyurtma berasiz</small></div>
-      <div class="st"><span class="n">2 · Ombor</span><b>Tovarni qabul qilish</b><small>Inventory'da qoldiq oshadi</small></div>
-      <div class="st"><span class="n">3 · Kassa</span><b>Mijozga sotish</b><small>Point of Sale'da chek urasiz</small></div>
-      <div class="st"><span class="n">4 · Ombor</span><b>Qoldiq kamayadi</b><small>Avtomatik, o'zingiz hech narsa qilmaysiz</small></div>
-      <div class="st"><span class="n">5 · Hisob</span><b>Pul va foyda</b><small>Invoicing'da to'lovlar va hisobotlar</small></div>
+<header class="hero">
+  <div class="in">
+    <div class="topbar">
+      <div class="logo"><i></i>Daftarsiz do'kon</div>
+      <span class="badge">Bepul · O'zbek tilida</span>
     </div>
-  </section>
-
-  <section class="section">
-    <h2>Bo'limlar ro'yxati</h2>
-    <div class="legend">
-      <span class="tag must">Majburiy</span><span class="tag useful">Foydali</span><span class="tag later">Keyinroq</span>
+    <div class="herogrid">
+      <div>
+        <h1>Odoo do'kon <mark>maktabi</mark></h1>
+        <p class="lead">Odoo'da 40 dan ortiq bo'lim bor, lekin kichik do'konga ularning bir nechtasi kifoya. Shu yerda faqat o'shalar: nima qiladi, menyuning qayerida va birinchi navbatda nimani sozlash kerak.</p>
+        <div class="stats">
+          <div><b>11</b><small>dars</small></div>
+          <div><b>5</b><small>majburiy bo'lim</small></div>
+          <div><b>1 kun</b><small>boshlash uchun</small></div>
+        </div>
+      </div>
+      <aside class="pcard" aria-live="polite">
+        <span class="lbl">Sizning natijangiz</span>
+        <div class="num"><span id="pnum">0</span><small> / <span id="ptot">11</span> dars</small></div>
+        <div class="bar"><i id="bar"></i></div>
+        <p id="pmsg">Har bir darsni o'qib bo'lgach, “O'qib chiqdim” tugmasini bosing.</p>
+        <a href="#kontaktlar" id="pnext">Birinchi darsdan boshlash →</a>
+      </aside>
     </div>
-    <nav class="index" id="index"></nav>
-  </section>
+  </div>
+</header>
 
-  <!-- 1 -->
-  <article class="mod" id="kontaktlar" data-title="Kontaktlar" data-tag="must">
-    <header>
-      <div class="titlerow"><h2>Kontaktlar</h2><span class="tag must">Majburiy</span></div>
-      <p class="names">Menyuda: <code>Contacts</code> · <code>Контакты</code></p>
-    </header>
-    <p>Odoo'dagi barcha odamlar va firmalarning yagona daftari: mijozlar, ta'minotchilar va do'koningizning o'zi. Boshqa bo'limlar ismlarni shu yerdan oladi, shuning uchun bitta odamni ikki marta kiritmang.</p>
-    <div class="cols">
-      <div><div class="lbl">Birinchi qiladigan ishlar</div>
-        <ol>
-          <li>Ta'minotchilaringizni kiriting: nomi, telefoni, manzili</li>
-          <li>Doimiy mijozlarni kiriting (qarzga oladiganlar, ulgurji xaridorlar)</li>
-          <li>Oddiy, tasodifiy xaridorni kiritish shart emas</li>
-        </ol>
-      </div>
-      <div><div class="lbl">Qayerda</div>
-        <p class="path">Contacts → New</p>
-        <p class="path">Settings → Companies → do'kon ma'lumotlari</p>
-      </div>
-    </div>
-    <div class="tip"><b>Maslahat</b>Avval Settings bo'limida do'koningiz nomini, manzilini va logotipini kiriting. Ular chek va hisob-fakturalarda chiqadi.</div>
-    <button class="donebtn" type="button" aria-pressed="false">O'qib chiqdim</button>
-  </article>
+<div class="in route">
+  <div class="track" aria-label="Tovarning do'kondagi yo'li">
+    <div class="stop"><div class="ic"><svg class="i"><use href="#i-cart"/></svg></div><span class="k">1 · Xarid</span><b>Ta'minotchidan buyurtma</b><small>Purchase</small></div>
+    <div class="stop"><div class="ic"><svg class="i"><use href="#i-box"/></svg></div><span class="k">2 · Ombor</span><b>Tovar qabul qilinadi</b><small>Qoldiq oshadi</small></div>
+    <div class="stop"><div class="ic"><svg class="i"><use href="#i-pos"/></svg></div><span class="k">3 · Kassa</span><b>Mijozga sotiladi</b><small>Point of Sale</small></div>
+    <div class="stop"><div class="ic"><svg class="i"><use href="#i-box"/></svg></div><span class="k">4 · Ombor</span><b>Qoldiq kamayadi</b><small>O'zi, avtomatik</small></div>
+    <div class="stop"><div class="ic"><svg class="i"><use href="#i-coin"/></svg></div><span class="k">5 · Hisob</span><b>Pul va foyda</b><small>Invoicing</small></div>
+  </div>
+</div>
 
-  <!-- 2 -->
-  <article class="mod" id="tovarlar" data-title="Tovarlar" data-tag="must">
-    <header>
-      <div class="titlerow"><h2>Tovarlar (mahsulot kartasi)</h2><span class="tag must">Majburiy</span></div>
-      <p class="names">Menyuda: <code>Inventory → Products</code> · <code>Склад → Товары</code></p>
-    </header>
-    <p>Har bir sotiladigan narsa uchun bitta “karta” ochiladi. Unda nomi, narxi, shtrix-kodi, rasmi va turi turadi. Kassa ham, ombor ham, xarid ham shu kartadan foydalanadi.</p>
-    <div class="cols">
-      <div><div class="lbl">Kartadagi asosiy maydonlar</div>
-        <ul>
-          <li><b>Product Type:</b> qoldig'i sanaladigan tovar uchun “Goods” + “Track Inventory” belgisi (eski versiyalarda “Storable Product”)</li>
-          <li><b>Sales Price:</b> sotish narxi</li>
-          <li><b>Cost:</b> tannarx, ya'ni olib kelish narxi</li>
-          <li><b>Barcode:</b> shtrix-kod, skaner uchun</li>
-          <li><b>Product Category:</b> guruh, masalan “Ichimliklar”</li>
-          <li><b>Available in POS:</b> kassada ko'rinishi uchun belgilang</li>
-        </ul>
-      </div>
-      <div><div class="lbl">Ko'p tovarni tez kiritish</div>
-        <ol>
-          <li>Products ro'yxatida ⚙ → <b>Import records</b></li>
-          <li>Namuna Excel faylni yuklab oling</li>
-          <li>Tovarlaringizni to'ldirib, qaytadan yuklang</li>
-        </ol>
-      </div>
-    </div>
-    <div class="tip"><b>Maslahat</b>Bir xil tovarning o'lchami yoki rangi turlicha bo'lsa (kiyim, poyabzal), Settings'da <b>Variants</b> ni yoqing. Shunda bitta kartada hamma o'lchamlar turadi.</div>
-    <button class="donebtn" type="button" aria-pressed="false">O'qib chiqdim</button>
-  </article>
+<div class="in layout">
+  <nav class="toc" id="toc" aria-label="Mundarija">
+    <span class="ttl">Darslar</span>
+    <div class="sep"></div>
+    <a class="extra" href="#kun">Do'kondagi bir kun</a>
+    <a class="extra" href="#uskuna">Qanday uskuna kerak</a>
+    <a class="extra" href="#muammo">Ko'p uchraydigan muammolar</a>
+    <a class="extra" href="#lugat">Lug'at</a>
+    <a class="extra" href="#tartib">O'rganish tartibi</a>
+  </nav>
 
-  <!-- 3 -->
-  <article class="mod" id="kassa" data-title="Kassa (POS)" data-tag="must">
-    <header>
-      <div class="titlerow"><h2>Kassa — Point of Sale</h2><span class="tag must">Majburiy</span></div>
-      <p class="names">Menyuda: <code>Point of Sale</code> · <code>Точка продаж</code></p>
-    </header>
-    <p>Do'konning yuragi. Sotuvchi ekranda tovarni tanlaydi yoki skanerlaydi, mijoz to'laydi, chek chiqadi. Internet bir muddat uzilsa ham kassa ishlashda davom etadi va keyin ma'lumotlarni yuboradi.</p>
-    <div class="cols">
-      <div><div class="lbl">Kassa kuni qanday o'tadi</div>
-        <ol>
-          <li><b>Open Register:</b> kassani ochasiz, ichidagi naqd pulni kiritasiz</li>
-          <li>Tovarni tanlang yoki skanerlang</li>
-          <li><b>Payment:</b> Naqd yoki Karta</li>
-          <li><b>Validate:</b> chek chiqadi</li>
-          <li>Kun oxirida <b>Close Register:</b> naqd pulni sanab kiritasiz, Odoo farqni ko'rsatadi</li>
-        </ol>
-      </div>
-      <div><div class="lbl">Sozlash</div>
-        <ul>
-          <li><span class="path">Point of Sale → Configuration → Settings</span></li>
-          <li><b>Payment Methods:</b> Naqd, Karta (Uzcard, Humo), Click/Payme uchun alohida usul qo'shing</li>
-          <li><b>Receipt:</b> chek tepasi va pastidagi yozuv</li>
-          <li><b>Discounts:</b> chegirma tugmasi</li>
-          <li>Har bir sotuvchi alohida kirishi uchun <b>Multi Employees per Session</b></li>
-        </ul>
-      </div>
-    </div>
-    <div class="tip"><b>Maslahat</b>Arzon USB shtrix-kod skaner klaviatura kabi ishlaydi, uni alohida sozlash shart emas. Avval sinov rejimida bir necha soxta savdo qiling, keyin ularni o'chirib, haqiqiy ishni boshlang.</div>
-    <button class="donebtn" type="button" aria-pressed="false">O'qib chiqdim</button>
-  </article>
+  <main class="content">
 
-  <!-- 4 -->
-  <article class="mod" id="ombor" data-title="Ombor (Inventory)" data-tag="must">
-    <header>
-      <div class="titlerow"><h2>Ombor — Inventory</h2><span class="tag must">Majburiy</span></div>
-      <p class="names">Menyuda: <code>Inventory</code> · <code>Склад</code></p>
-    </header>
-    <p>Qaysi tovardan qancha qolganini ko'rsatadi. Kassada sotilganda qoldiq o'zi kamayadi, ta'minotchidan qabul qilganda o'zi oshadi.</p>
-    <div class="cols">
-      <div><div class="lbl">Asosiy amallar</div>
-        <ul>
-          <li><b>Receipts:</b> kirim, ya'ni kelgan tovarni qabul qilish</li>
-          <li><b>Deliveries:</b> chiqim, ya'ni mijozga jo'natish</li>
-          <li><b>Physical Inventory:</b> qo'lda sanash va qoldiqni tuzatish</li>
-          <li><b>Replenishment:</b> tugayotgan tovarlar ro'yxati</li>
-        </ul>
+    <article class="lesson" id="kontaktlar" data-tag="must" data-title="Kontaktlar">
+      <div class="head"><div class="ic"><svg class="i"><use href="#i-user"/></svg></div><div><span class="no">Dars 1</span><h2>Kontaktlar</h2></div><span class="tag must">Majburiy</span></div>
+      <div class="body">
+        <div class="menu">Menyuda: <span class="crumbs"><i>Contacts</i></span> <span class="ru">Контакты</span></div>
+        <p class="intro">Odoo'dagi barcha odamlar va firmalarning yagona daftari: mijozlar, ta'minotchilar va do'koningizning o'zi. Boshqa bo'limlar ismlarni shu yerdan oladi, shuning uchun bitta odamni ikki marta kiritmang.</p>
+        <div class="cols">
+          <div><div class="lbl">Birinchi qiladigan ishlar</div><ol class="num"><li>Ta'minotchilaringizni kiriting: nomi, telefoni, manzili</li><li>Doimiy mijozlarni kiriting: nasiyaga oladiganlar, ulgurji xaridorlar</li><li>Tasodifiy xaridorni kiritish shart emas</li></ol></div>
+          <div><div class="lbl">Qayerda</div><ul><li><span class="crumbs"><i>Contacts</i><i>New</i></span></li><li><span class="crumbs"><i>Settings</i><i>Companies</i></span>: do'kon nomi, manzili, logotipi</li></ul></div>
+        </div>
+        <div class="note"><span class="em">!</span><div><b>Maslahat</b>Avval Settings'da do'koningiz nomi, manzili va logotipini kiriting. Ular chek va hisob-fakturalarda chiqadi.</div></div>
+        <button class="donebtn" type="button" aria-pressed="false">O'qib chiqdim</button>
       </div>
-      <div><div class="lbl">Birinchi kun</div>
-        <ol>
-          <li>Do'kondagi hamma tovarni sanang</li>
-          <li><span class="path">Inventory → Operations → Physical Inventory</span></li>
-          <li>Har bir tovar uchun haqiqiy sonini yozib, <b>Apply</b> bosing</li>
-        </ol>
-      </div>
-    </div>
-    <div class="tip"><b>Maslahat</b><b>Reordering Rules</b> (min/max) qo'ying. Masalan, non 10 tadan kam qolsa, Odoo avtomatik ravishda 50 ta olishni taklif qiladi.</div>
-    <button class="donebtn" type="button" aria-pressed="false">O'qib chiqdim</button>
-  </article>
+    </article>
 
-  <!-- 5 -->
-  <article class="mod" id="xarid" data-title="Xarid (Purchase)" data-tag="useful">
-    <header>
-      <div class="titlerow"><h2>Xarid — Purchase</h2><span class="tag useful">Foydali</span></div>
-      <p class="names">Menyuda: <code>Purchase</code> · <code>Закупки</code></p>
-    </header>
-    <p>Ta'minotchidan tovar buyurtma qilish va unga qancha qarzingiz borligini kuzatish. Tovarni bitta-ikkita joydan olsangiz ham, bu bo'lim tannarxni aniq hisoblashga yordam beradi.</p>
-    <div class="cols">
-      <div><div class="lbl">Ketma-ketlik</div>
-        <ol>
-          <li><b>RFQ:</b> narx so'rovi, ya'ni qoralama</li>
-          <li><b>Confirm Order:</b> buyurtma tasdiqlanadi</li>
-          <li><b>Receive Products:</b> tovar kelganda qabul qilasiz, qoldiq oshadi</li>
-          <li><b>Create Bill:</b> ta'minotchi hisobi</li>
-          <li><b>Register Payment:</b> to'langanini belgilaysiz</li>
-        </ol>
+    <article class="lesson" id="tovarlar" data-tag="must" data-title="Tovarlar">
+      <div class="head"><div class="ic"><svg class="i"><use href="#i-tag"/></svg></div><div><span class="no">Dars 2</span><h2>Tovar kartasi</h2></div><span class="tag must">Majburiy</span></div>
+      <div class="body">
+        <div class="menu">Menyuda: <span class="crumbs"><i>Inventory</i><i>Products</i></span> <span class="ru">Склад → Товары</span></div>
+        <p class="intro">Har bir sotiladigan narsa uchun bitta “karta” ochiladi: nomi, narxi, shtrix-kodi, rasmi. Kassa ham, ombor ham, xarid ham shu kartadan foydalanadi.</p>
+        <div class="cols">
+          <div><div class="lbl">Kartadagi asosiy maydonlar</div><ul>
+            <li><b>Product Type:</b> “Goods” va <b>Track Inventory</b> belgisi. Shunda qoldiq sanaladi. Eski versiyalarda “Storable Product” deyiladi</li>
+            <li><b>Sales Price:</b> sotish narxi</li>
+            <li><b>Cost:</b> tannarx, ya'ni olib kelish narxi</li>
+            <li><b>Barcode:</b> shtrix-kod</li>
+            <li><b>Product Category:</b> guruh, masalan “Ichimliklar”</li>
+            <li><b>Available in POS:</b> kassada ko'rinishi uchun</li></ul></div>
+          <div><div class="lbl">Ko'p tovarni tez kiritish</div><ol class="num"><li>Products ro'yxatida ⚙ → <b>Import records</b></li><li>Namuna Excel faylni yuklab oling</li><li>Tovarlaringizni to'ldirib, qayta yuklang</li></ol></div>
+        </div>
+        <div class="note"><span class="em">!</span><div><b>Maslahat</b>Bitta tovarning o'lchami yoki rangi turlicha bo'lsa (kiyim, poyabzal), Settings'da <b>Variants</b> ni yoqing. Hamma o'lcham bitta kartada turadi.</div></div>
+        <button class="donebtn" type="button" aria-pressed="false">O'qib chiqdim</button>
       </div>
-      <div><div class="lbl">Nima beradi</div>
-        <ul>
-          <li>Qaysi ta'minotchidan qancha olganingiz</li>
-          <li>Kimga qancha qarzingiz bor</li>
-          <li>Tovarning haqiqiy tannarxi, demak haqiqiy foyda</li>
-        </ul>
+    </article>
+
+    <article class="lesson" id="kassa" data-tag="must" data-title="Kassa (POS)">
+      <div class="head"><div class="ic"><svg class="i"><use href="#i-pos"/></svg></div><div><span class="no">Dars 3</span><h2>Kassa: Point of Sale</h2></div><span class="tag must">Majburiy</span></div>
+      <div class="body">
+        <div class="menu">Menyuda: <span class="crumbs"><i>Point of Sale</i></span> <span class="ru">Точка продаж</span></div>
+        <p class="intro">Do'konning yuragi. Sotuvchi tovarni tanlaydi yoki skanerlaydi, mijoz to'laydi, chek chiqadi. Internet bir muddat uzilsa ham kassa ishlayveradi.</p>
+        <figure class="pos" style="margin:0">
+          <div class="bar2"><span>Kassa #1 · Dilnoza</span><span>● Online</span></div>
+          <div class="scr">
+            <div class="order">
+              <div class="r"><span>Non × 2</span><span>8 000</span></div>
+              <div class="r"><span>Sut 1 L</span><span>14 000</span></div>
+              <div class="r"><span>Choy 100 g</span><span>25 000</span></div>
+              <div class="r t"><span>Jami</span><span>47 000</span></div>
+              <div class="pay">To'lash</div>
+            </div>
+            <div class="grid">
+              <div class="p"><span class="e">🍞</span>Non<small>4 000</small></div>
+              <div class="p"><span class="e">🥛</span>Sut<small>14 000</small></div>
+              <div class="p"><span class="e">🍵</span>Choy<small>25 000</small></div>
+              <div class="p"><span class="e">🥚</span>Tuxum<small>18 000</small></div>
+              <div class="p"><span class="e">🧂</span>Tuz<small>3 000</small></div>
+              <div class="p"><span class="e">🍬</span>Shakar<small>13 000</small></div>
+            </div>
+          </div>
+          <figcaption>Kassa ekrani taxminan shunday: chapda chek, o'ngda tovarlar. Narxlar misol uchun.</figcaption>
+        </figure>
+        <div class="cols">
+          <div><div class="lbl">Kassa kuni</div><ol class="num">
+            <li><b>Open Register:</b> kassani ochasiz, ichidagi naqd pulni kiritasiz</li>
+            <li>Tovarni tanlang yoki skanerlang</li>
+            <li><b>Payment:</b> naqd yoki karta</li>
+            <li><b>Validate:</b> chek chiqadi</li>
+            <li>Kechqurun <b>Close Register:</b> naqd pulni sanaysiz, Odoo farqni ko'rsatadi</li></ol></div>
+          <div><div class="lbl">Sozlash</div><ul>
+            <li><span class="crumbs"><i>Point of Sale</i><i>Configuration</i><i>Settings</i></span></li>
+            <li><b>Payment Methods:</b> naqd, karta (Uzcard, Humo), Click va Payme uchun alohida usul</li>
+            <li><b>Receipt:</b> chekning tepa va pastki yozuvi</li>
+            <li>Har bir sotuvchi alohida kirishi uchun <b>Multi Employees per Session</b></li></ul></div>
+        </div>
+        <div class="note"><span class="em">!</span><div><b>Maslahat</b>Oddiy USB skaner klaviatura kabi ishlaydi, sozlash shart emas. Avval bir necha sinov savdosini qiling, keyin haqiqiy ishni boshlang.</div></div>
+        <button class="donebtn" type="button" aria-pressed="false">O'qib chiqdim</button>
       </div>
-    </div>
-    <button class="donebtn" type="button" aria-pressed="false">O'qib chiqdim</button>
-  </article>
+    </article>
 
-  <!-- 6 -->
-  <article class="mod" id="hisob" data-title="Hisob (Invoicing)" data-tag="useful">
-    <header>
-      <div class="titlerow"><h2>Hisob-kitob — Invoicing</h2><span class="tag useful">Foydali</span></div>
-      <p class="names">Menyuda: <code>Invoicing</code> yoki <code>Accounting</code> · <code>Выставление счетов</code> / <code>Бухгалтерия</code></p>
-    </header>
-    <p>Pul qayerdan kelib, qayerga ketganini ko'rsatadi. Kassa savdolari kassa yopilganda bu yerga o'zi tushadi. Qo'lda faqat qarzga sotuv, ulgurji savdo va xarajatlarni kiritasiz.</p>
-    <div class="cols">
-      <div><div class="lbl">Kerak bo'ladigan joylari</div>
-        <ul>
-          <li><b>Customers → Invoices:</b> mijozga hisob-faktura, qarzga sotuv</li>
-          <li><b>Vendors → Bills:</b> ta'minotchi hisoblari</li>
-          <li><b>Payments:</b> to'lovlar</li>
-          <li><b>Reporting → Aged Receivable:</b> kim sizga qarz</li>
-          <li><b>Reporting → Profit and Loss:</b> foyda va zarar</li>
-        </ul>
+    <article class="lesson" id="ombor" data-tag="must" data-title="Ombor">
+      <div class="head"><div class="ic"><svg class="i"><use href="#i-box"/></svg></div><div><span class="no">Dars 4</span><h2>Ombor: Inventory</h2></div><span class="tag must">Majburiy</span></div>
+      <div class="body">
+        <div class="menu">Menyuda: <span class="crumbs"><i>Inventory</i></span> <span class="ru">Склад</span></div>
+        <p class="intro">Qaysi tovardan qancha qolganini ko'rsatadi. Kassada sotilganda qoldiq o'zi kamayadi, ta'minotchidan qabul qilganda o'zi oshadi.</p>
+        <div class="cols">
+          <div><div class="lbl">Asosiy amallar</div><ul><li><b>Receipts:</b> kelgan tovarni qabul qilish</li><li><b>Deliveries:</b> mijozga jo'natish</li><li><b>Physical Inventory:</b> sanash va qoldiqni tuzatish</li><li><b>Replenishment:</b> tugayotgan tovarlar</li></ul></div>
+          <div><div class="lbl">Birinchi kun</div><ol class="num"><li>Do'kondagi hamma tovarni sanang</li><li><span class="crumbs"><i>Inventory</i><i>Operations</i><i>Physical Inventory</i></span></li><li>Haqiqiy sonni yozib, <b>Apply</b> bosing</li></ol></div>
+        </div>
+        <div class="note"><span class="em">!</span><div><b>Maslahat</b><b>Reordering Rules</b> (min/max) qo'ying. Masalan, non 10 tadan kam qolsa, Odoo 50 ta olishni o'zi taklif qiladi.</div></div>
+        <button class="donebtn" type="button" aria-pressed="false">O'qib chiqdim</button>
       </div>
-      <div><div class="lbl">Invoicing yoki Accounting</div>
-        <p>Kichik do'konga <b>Invoicing</b> yetarli. To'liq buxgalteriya (Accounting) faqat buxgalteringiz bo'lsa va soliq hisobotlarini Odoo'da yuritmoqchi bo'lsangiz kerak.</p>
+    </article>
+
+    <article class="lesson" id="hisobot" data-tag="must" data-title="Hisobotlar">
+      <div class="head"><div class="ic"><svg class="i"><use href="#i-chart"/></svg></div><div><span class="no">Dars 5</span><h2>Hisobotlarni o'qish</h2></div><span class="tag must">Majburiy</span></div>
+      <div class="body">
+        <div class="menu">Har bir bo'limda: <span class="crumbs"><i>Reporting</i></span> <span class="ru">Отчётность</span></div>
+        <p class="intro">Odoo'dan asosiy foyda shu. Hisobotlar qaysi tovar pul keltirayotganini, qaysi biri javonda changlanib yotganini ko'rsatadi.</p>
+        <div class="cols">
+          <div><div class="lbl">Eng kerakli 5 ta hisobot</div><ul>
+            <li><span class="crumbs"><i>POS</i><i>Reporting</i><i>Orders</i></span> tushum</li>
+            <li>O'sha joyda <b>Group By → Product</b>: eng ko'p sotilganlar</li>
+            <li><span class="crumbs"><i>Inventory</i><i>Reporting</i><i>Stock</i></span> qoldiq</li>
+            <li><span class="crumbs"><i>Inventory</i><i>Reporting</i><i>Valuation</i></span> tovar qiymati</li>
+            <li><span class="crumbs"><i>Invoicing</i><i>Reporting</i><i>Profit and Loss</i></span> sof foyda</li></ul></div>
+          <div><div class="lbl">Hisobot tugmalari</div><ul>
+            <li><b>Filters:</b> sana, kassa yoki sotuvchi bo'yicha</li>
+            <li><b>Group By:</b> kun, tovar, kategoriya</li>
+            <li><b>Graph / Pivot:</b> grafik yoki jadval</li>
+            <li><b>Favorites → Save:</b> hisobotni saqlab qo'yish</li>
+            <li><b>Download (xlsx):</b> Excel'ga yuklash</li></ul></div>
+        </div>
+        <div class="note"><span class="em">!</span><div><b>Maslahat</b>Har dushanba 10 daqiqa ajrating: o'tgan haftaning eng ko'p va eng kam sotilgan 10 ta tovarini ko'ring.</div></div>
+        <button class="donebtn" type="button" aria-pressed="false">O'qib chiqdim</button>
       </div>
-    </div>
-    <div class="tip"><b>Maslahat</b>Valyutani <b>UZS</b> qiling va soliqlarni (QQS bor yoki yo'qligini) avval buxgalteringiz bilan kelishib oling, keyin <span class="path">Settings → Taxes</span> da sozlang.</div>
-    <button class="donebtn" type="button" aria-pressed="false">O'qib chiqdim</button>
-  </article>
+    </article>
 
-  <!-- 7 -->
-  <article class="mod" id="xodimlar" data-title="Xodimlar" data-tag="useful">
-    <header>
-      <div class="titlerow"><h2>Xodimlar va foydalanuvchilar</h2><span class="tag useful">Foydali</span></div>
-      <p class="names">Menyuda: <code>Employees</code> · <code>Сотрудники</code>, <code>Settings → Users</code></p>
-    </header>
-    <p>Kim nima qila olishini belgilaysiz. Sotuvchi faqat kassani ko'rsin, siz esa hammasini ko'ring. Shunda xatolar va o'g'rilik kamayadi.</p>
-    <div class="cols">
-      <div><div class="lbl">Ikki xil yo'l</div>
-        <ul>
-          <li><b>User</b> (foydalanuvchi): Odoo'ga login va parol bilan kiradi</li>
-          <li><b>Employee</b> (xodim): login kerak emas, kassada PIN-kod bilan kiradi</li>
-        </ul>
+    <article class="lesson" id="xarid" data-tag="useful" data-title="Xarid">
+      <div class="head"><div class="ic"><svg class="i"><use href="#i-cart"/></svg></div><div><span class="no">Dars 6</span><h2>Xarid: Purchase</h2></div><span class="tag useful">Foydali</span></div>
+      <div class="body">
+        <div class="menu">Menyuda: <span class="crumbs"><i>Purchase</i></span> <span class="ru">Закупки</span></div>
+        <p class="intro">Ta'minotchidan tovar buyurtma qilish va unga qancha qarzingiz borligini kuzatish. Tannarxni aniq hisoblashga ham yordam beradi.</p>
+        <div class="cols">
+          <div><div class="lbl">Ketma-ketlik</div><ol class="num"><li><b>RFQ:</b> qoralama buyurtma</li><li><b>Confirm Order:</b> tasdiqlash</li><li><b>Receive Products:</b> tovarni qabul qilish</li><li><b>Create Bill:</b> ta'minotchi hisobi</li><li><b>Register Payment:</b> to'lov</li></ol></div>
+          <div><div class="lbl">Nima beradi</div><ul><li>Kimdan qancha olganingiz</li><li>Kimga qancha qarzingiz bor</li><li>Tovarning haqiqiy tannarxi, demak haqiqiy foyda</li></ul></div>
+        </div>
+        <button class="donebtn" type="button" aria-pressed="false">O'qib chiqdim</button>
       </div>
-      <div><div class="lbl">Tavsiya</div>
-        <p>Sotuvchilarni <b>Employee</b> qilib, ularga PIN bering. Shunda har bir chekda kim sotgani yoziladi va qo'shimcha User uchun pul to'lamaysiz.</p>
+    </article>
+
+    <article class="lesson" id="hisob" data-tag="useful" data-title="Hisob-kitob">
+      <div class="head"><div class="ic"><svg class="i"><use href="#i-coin"/></svg></div><div><span class="no">Dars 7</span><h2>Hisob-kitob: Invoicing</h2></div><span class="tag useful">Foydali</span></div>
+      <div class="body">
+        <div class="menu">Menyuda: <span class="crumbs"><i>Invoicing</i></span> yoki <span class="crumbs"><i>Accounting</i></span> <span class="ru">Бухгалтерия</span></div>
+        <p class="intro">Pul qayerdan kelib, qayerga ketganini ko'rsatadi. Kassa savdolari kassa yopilganda bu yerga o'zi tushadi.</p>
+        <div class="cols">
+          <div><div class="lbl">Kerak bo'ladigan joylari</div><ul><li><b>Customers → Invoices:</b> mijozga hisob-faktura</li><li><b>Vendors → Bills:</b> ta'minotchi hisoblari</li><li><b>Payments:</b> to'lovlar</li><li><b>Aged Receivable:</b> kim sizga qarz</li><li><b>Profit and Loss:</b> foyda va zarar</li></ul></div>
+          <div><div class="lbl">Invoicing yoki Accounting</div><p>Kichik do'konga <b>Invoicing</b> yetarli. To'liq buxgalteriya faqat buxgalteringiz bo'lsa va soliq hisobotlarini Odoo'da yuritmoqchi bo'lsangiz kerak.</p></div>
+        </div>
+        <div class="note"><span class="em">!</span><div><b>Maslahat</b>Valyutani <b>UZS</b> qiling. Soliqlarni (QQS bormi, yo'qmi) avval buxgalteringiz bilan kelishib, keyin <span class="crumbs"><i>Settings</i><i>Taxes</i></span> da sozlang.</div></div>
+        <button class="donebtn" type="button" aria-pressed="false">O'qib chiqdim</button>
       </div>
-    </div>
-    <button class="donebtn" type="button" aria-pressed="false">O'qib chiqdim</button>
-  </article>
+    </article>
 
-  <!-- 8 -->
-  <article class="mod" id="qaytarish" data-title="Qaytarish va chegirma" data-tag="useful">
-    <header>
-      <div class="titlerow"><h2>Qaytarish, chegirma va aksiyalar</h2><span class="tag useful">Foydali</span></div>
-      <p class="names">Menyuda: <code>Point of Sale → Refund</code>, <code>Products → Pricelists</code> · <code>Возврат</code>, <code>Прайс-листы</code></p>
-    </header>
-    <p>Mijoz tovarni qaytarib olib keldi yoki doimiy xaridorga arzonroq berasiz. Bularni to'g'ri kiritsangiz, kassadagi pul ham, ombordagi qoldiq ham to'g'ri bo'lib qoladi.</p>
-    <div class="cols">
-      <div><div class="lbl">Tovarni qaytarish</div>
-        <ol>
-          <li>Kassa ekranida <b>Refund</b> (yoki Orders → eski chek) ni bosing</li>
-          <li>Mijozning chekini toping: sana, raqam yoki mijoz nomi bo'yicha</li>
-          <li>Qaytgan tovar va sonini tanlang</li>
-          <li><b>Payment</b> → pulni qaytaring → <b>Validate</b></li>
-        </ol>
-        <p style="margin-top:8px">Tovar omborga o'zi qaytadi, pul kassadan ayiriladi.</p>
+    <article class="lesson" id="qarz" data-tag="useful" data-title="Nasiya">
+      <div class="head"><div class="ic"><svg class="i"><use href="#i-book"/></svg></div><div><span class="no">Dars 8</span><h2>Qarzga savdo (nasiya)</h2></div><span class="tag useful">Foydali</span></div>
+      <div class="body">
+        <div class="menu">Menyuda: <span class="crumbs"><i>POS</i><i>Payment Methods</i><i>Customer Account</i></span> <span class="ru">Счёт клиента</span></div>
+        <p class="intro">Mahalla do'konlarida eng ko'p uchraydigan holat. Daftar o'rniga har bir qarz mijoz nomi bilan Odoo'da yoziladi va yo'qolmaydi.</p>
+        <div class="cols">
+          <div><div class="lbl">Sozlash (bir marta)</div><ol class="num"><li><span class="crumbs"><i>POS</i><i>Configuration</i><i>Payment Methods</i><i>New</i></span></li><li>Nomi “Nasiya”, turi <b>Customer Account</b></li><li>Uni kassangizga qo'shing</li><li>Nasiyaga oladigan mijozlarni Kontaktlarga kiriting</li></ol></div>
+          <div><div class="lbl">Har kuni</div><ul><li>Sotishda avval <b>Customer</b> bilan mijozni tanlang, to'lovda “Nasiya” ni bosing</li><li>Qarz to'lansa: Invoicing → mijoz → <b>Register Payment</b></li><li>Kim qancha qarz: <b>Aged Receivable</b></li></ul></div>
+        </div>
+        <div class="note"><span class="em">!</span><div><b>Maslahat</b>Mijoz kartasida <b>Credit Limit</b> qo'ysangiz, qarz chegaradan oshganda Odoo ogohlantiradi. Avval Invoicing sozlamalarida yoqiladi.</div></div>
+        <button class="donebtn" type="button" aria-pressed="false">O'qib chiqdim</button>
       </div>
-      <div><div class="lbl">Chegirma turlari</div>
-        <ul>
-          <li><b>Bitta tovarga:</b> kassada tovarni tanlab, <b>% Disc</b> tugmasi</li>
-          <li><b>Butun chekka:</b> Settings'da <b>Global Discounts</b> ni yoqing</li>
-          <li><b>Ulgurji narx:</b> <b>Pricelists</b>, masalan “10 tadan ko'p olsa, 5% arzon”</li>
-          <li><b>Aksiya va bonus:</b> <b>Promotions / Loyalty</b>, masalan “2 ta olsang, 1 tasi bepul”</li>
-        </ul>
+    </article>
+
+    <article class="lesson" id="qaytarish" data-tag="useful" data-title="Qaytarish va chegirma">
+      <div class="head"><div class="ic"><svg class="i"><use href="#i-back"/></svg></div><div><span class="no">Dars 9</span><h2>Qaytarish, chegirma, aksiya</h2></div><span class="tag useful">Foydali</span></div>
+      <div class="body">
+        <div class="menu">Menyuda: <span class="crumbs"><i>POS</i><i>Refund</i></span> <span class="crumbs"><i>Products</i><i>Pricelists</i></span> <span class="ru">Возврат, Прайс-листы</span></div>
+        <p class="intro">Mijoz tovarni qaytardi yoki doimiy xaridorga arzonroq berasiz. To'g'ri kiritsangiz, kassadagi pul ham, qoldiq ham to'g'ri qoladi.</p>
+        <div class="cols">
+          <div><div class="lbl">Tovarni qaytarish</div><ol class="num"><li>Kassada <b>Refund</b> ni bosing</li><li>Mijozning chekini toping</li><li>Qaytgan tovar va sonini tanlang</li><li><b>Payment</b> → pulni qaytaring → <b>Validate</b></li></ol></div>
+          <div><div class="lbl">Chegirma turlari</div><ul><li><b>Bitta tovarga:</b> <b>% Disc</b> tugmasi</li><li><b>Butun chekka:</b> <b>Global Discounts</b></li><li><b>Ulgurji narx:</b> <b>Pricelists</b></li><li><b>“2 ta olsang, 1 tasi bepul”:</b> <b>Promotions / Loyalty</b></li></ul></div>
+        </div>
+        <div class="note"><span class="em">!</span><div><b>Maslahat</b><b>Restrict Price Modifications</b> ni yoqing. Shunda chegirmani faqat menejer bera oladi.</div></div>
+        <button class="donebtn" type="button" aria-pressed="false">O'qib chiqdim</button>
       </div>
-    </div>
-    <div class="tip"><b>Maslahat</b>Sotuvchilar istalgancha chegirma qila olmasligi uchun <span class="path">POS Settings → Restrict Price Modifications</span> ni yoqing. Shunda chegirmani faqat menejer bera oladi.</div>
-    <button class="donebtn" type="button" aria-pressed="false">O'qib chiqdim</button>
-  </article>
+    </article>
 
-  <!-- 9 -->
-  <article class="mod" id="qarz" data-title="Qarzga savdo" data-tag="useful">
-    <header>
-      <div class="titlerow"><h2>Qarzga savdo (nasiya)</h2><span class="tag useful">Foydali</span></div>
-      <p class="names">Menyuda: <code>POS → Payment Methods → Customer Account</code> · <code>Счёт клиента</code></p>
-    </header>
-    <p>Mahalla do'konlarida eng ko'p uchraydigan holat. Daftar o'rniga har bir qarz mijoz nomi bilan Odoo'da yoziladi va hech qachon yo'qolmaydi.</p>
-    <div class="cols">
-      <div><div class="lbl">Sozlash (bir marta)</div>
-        <ol>
-          <li><span class="path">Point of Sale → Configuration → Payment Methods → New</span></li>
-          <li>Nomi: “Nasiya”, turi: <b>Customer Account</b></li>
-          <li>Uni kassangizga qo'shing</li>
-          <li>Qarzga oladigan mijozlarni Kontaktlarga kiriting</li>
-        </ol>
+    <article class="lesson" id="xodimlar" data-tag="useful" data-title="Xodimlar">
+      <div class="head"><div class="ic"><svg class="i"><use href="#i-badge"/></svg></div><div><span class="no">Dars 10</span><h2>Xodimlar va foydalanuvchilar</h2></div><span class="tag useful">Foydali</span></div>
+      <div class="body">
+        <div class="menu">Menyuda: <span class="crumbs"><i>Employees</i></span> <span class="crumbs"><i>Settings</i><i>Users</i></span> <span class="ru">Сотрудники</span></div>
+        <p class="intro">Kim nima qila olishini belgilaysiz. Sotuvchi faqat kassani ko'rsin, siz esa hammasini ko'ring.</p>
+        <div class="cols">
+          <div><div class="lbl">Ikki xil yo'l</div><ul><li><b>User:</b> Odoo'ga login va parol bilan kiradi</li><li><b>Employee:</b> login kerak emas, kassaga PIN-kod bilan kiradi</li></ul></div>
+          <div><div class="lbl">Tavsiya</div><p>Sotuvchilarni <b>Employee</b> qilib, PIN bering. Har bir chekda kim sotgani yoziladi va qo'shimcha User uchun pul to'lamaysiz.</p></div>
+        </div>
+        <button class="donebtn" type="button" aria-pressed="false">O'qib chiqdim</button>
       </div>
-      <div><div class="lbl">Har kuni</div>
-        <ul>
-          <li>Sotishda avval <b>Customer</b> tugmasi bilan mijozni tanlang, to'lovda “Nasiya” ni bosing</li>
-          <li>Mijoz qarzini to'lasa: Invoicing → mijoz → <b>Register Payment</b></li>
-          <li>Kim qancha qarzligini ko'rish: <span class="path">Invoicing → Reporting → Aged Receivable</span></li>
-        </ul>
+    </article>
+
+    <article class="lesson" id="keyinroq" data-tag="later" data-title="Keyinroq">
+      <div class="head"><div class="ic"><svg class="i"><use href="#i-plus"/></svg></div><div><span class="no">Dars 11</span><h2>Keyinroq o'rganadiganlar</h2></div><span class="tag later">Keyinroq</span></div>
+      <div class="body">
+        <p class="intro">Asosiysini o'zlashtirgandan keyin qo'shasiz.</p>
+        <div class="cols">
+          <div><ul><li><b>Sales:</b> ulgurji xaridorlarga taklif va buyurtma</li><li><b>Website / eCommerce:</b> omborga ulangan internet-do'kon</li><li><b>Loyalty:</b> bonus karta, promo-kod</li></ul></div>
+          <div><ul><li><b>CRM:</b> mijozlar bilan savdo jarayoni</li><li><b>Barcode:</b> omborda skaner bilan ishlash</li><li><b>Expenses:</b> ijara, svet, maosh xarajatlari</li></ul></div>
+        </div>
+        <div class="note"><span class="em">!</span><div><b>Muhim</b>Hammasini birdaniga o'rnatmang. Avval kassa va ombor bir-ikki hafta muammosiz ishlasin.</div></div>
+        <button class="donebtn" type="button" aria-pressed="false">O'qib chiqdim</button>
       </div>
-    </div>
-    <div class="tip"><b>Maslahat</b>Mijoz kartasida <b>Credit Limit</b> qo'ysangiz, qarz shu chegaradan oshganda Odoo ogohlantiradi. Bu imkoniyat avval Invoicing sozlamalarida yoqiladi.</div>
-    <button class="donebtn" type="button" aria-pressed="false">O'qib chiqdim</button>
-  </article>
+    </article>
 
-  <!-- 10 -->
-  <article class="mod" id="hisobot" data-title="Hisobotlar" data-tag="must">
-    <header>
-      <div class="titlerow"><h2>Hisobotlarni o'qish</h2><span class="tag must">Majburiy</span></div>
-      <p class="names">Har bir bo'limda: <code>Reporting</code> · <code>Отчётность</code></p>
-    </header>
-    <p>Odoo'ni ishlatishdan asosiy foyda shu. Hisobotlar sizga qaysi tovar pul keltirayotganini, qaysi tovar esa javonda changlanib yotganini ko'rsatadi.</p>
-    <div class="cols">
-      <div><div class="lbl">Eng kerakli 5 ta hisobot</div>
-        <ul>
-          <li><span class="path">POS → Reporting → Orders</span>: kunlik va oylik tushum</li>
-          <li>O'sha joyda <b>Group By → Product</b>: eng ko'p sotilgan tovarlar</li>
-          <li><span class="path">Inventory → Reporting → Stock</span>: hozirgi qoldiq</li>
-          <li><span class="path">Inventory → Reporting → Valuation</span>: ombordagi tovar necha pullik</li>
-          <li><span class="path">Invoicing → Reporting → Profit and Loss</span>: sof foyda</li>
-        </ul>
+    <section class="sec" id="kun">
+      <span class="eyebrow">Amaliyot</span>
+      <h2>Do'kondagi bir kun Odoo'da</h2>
+      <div class="day">
+        <div class="r"><b>Ertalab</b><span>Point of Sale → <b>Open Register</b>, kassadagi naqd pulni kiritasiz.</span></div>
+        <div class="r"><b>Kun davomida</b><span>Savdo kassada. Ta'minotchi kelsa: Purchase → buyurtma → <b>Receive</b>.</span></div>
+        <div class="r"><b>Tushdan keyin</b><span>Inventory → <b>Replenishment</b>: nima tugayotganini ko'rasiz.</span></div>
+        <div class="r"><b>Kechqurun</b><span>Kassani yopasiz, naqd pulni sanaysiz. Farq bo'lsa, sababini yozib qo'yasiz.</span></div>
+        <div class="r"><b>Hafta oxiri</b><span>POS → Reporting → <b>Orders</b>: eng ko'p sotilgan tovarlar va tushum.</span></div>
       </div>
-      <div><div class="lbl">Hisobot tugmalari</div>
-        <ul>
-          <li><b>Filters:</b> sana, kassa yoki sotuvchi bo'yicha ajratish</li>
-          <li><b>Group By:</b> kun, tovar yoki kategoriya bo'yicha guruhlash</li>
-          <li><b>Graph / Pivot:</b> grafik yoki jadval ko'rinishi</li>
-          <li><b>Favorites → Save:</b> sozlangan hisobotni saqlab qo'yish</li>
-          <li><b>⬇ Download (xlsx):</b> Excel'ga yuklab olish</li>
-        </ul>
+    </section>
+
+    <section class="sec" id="uskuna">
+      <span class="eyebrow">Jihozlar</span>
+      <h2>Qanday uskuna kerak</h2>
+      <div class="gear">
+        <div><span class="e">💻</span><b>Kompyuter yoki planshet</b><span class="tag must">Shart</span><small>Chrome brauzeri yetadi. Planshetda barmoq bilan bosiladi.</small></div>
+        <div><span class="e">📶</span><b>Internet</b><span class="tag must">Shart</span><small>Uzilib qolsa, kassa ishlayveradi va keyin ma'lumotlarni yuboradi.</small></div>
+        <div><span class="e">🔫</span><b>Shtrix-kod skaner</b><span class="tag useful">Juda foydali</span><small>USB orqali klaviatura kabi ulanadi, sozlash shart emas.</small></div>
+        <div><span class="e">🧾</span><b>Chek printer</b><span class="tag later">Ixtiyoriy</span><small>Oddiy usulda brauzer orqali chop etadi. Avtomatik chop etish uchun IoT Box yoki ePOS printer kerak.</small></div>
+        <div><span class="e">🗃️</span><b>Pul qutisi</b><span class="tag later">Ixtiyoriy</span><small>Odatda chek printerga ulanadi va to'lovda o'zi ochiladi.</small></div>
+        <div><span class="e">📱</span><b>Telefon</b><span class="tag useful">Foydali</span><small>Do'konda bo'lmasangiz ham savdoni ko'rasiz.</small></div>
       </div>
-    </div>
-    <div class="tip"><b>Maslahat</b>Har dushanba 10 daqiqa ajrating: o'tgan haftada eng ko'p va eng kam sotilgan 10 ta tovarni ko'ring. Kam sotilganini kamroq oling, ko'p sotilganini tugatib qo'ymang.</div>
-    <button class="donebtn" type="button" aria-pressed="false">O'qib chiqdim</button>
-  </article>
+    </section>
 
-  <!-- 11 -->
-  <article class="mod" id="keyinroq" data-title="Keyinroq kerak bo'ladiganlar" data-tag="later">
-    <header>
-      <div class="titlerow"><h2>Keyinroq o'rganadiganlar</h2><span class="tag later">Keyinroq</span></div>
-      <p class="names">Asosiysini o'zlashtirgandan keyin qo'shasiz</p>
-    </header>
-    <div class="cols">
-      <div><ul>
-        <li><b>Sales</b> (Продажи): ulgurji xaridorlarga taklif (quotation) va buyurtma</li>
-        <li><b>Website / eCommerce</b>: internet-do'kon, ombor bilan ulangan</li>
-        <li><b>Loyalty</b>: bonus karta, aksiya va promo-kodlar (POS ichida)</li>
-      </ul></div>
-      <div><ul>
-        <li><b>CRM</b>: mijozlar bilan savdo jarayonini kuzatish</li>
-        <li><b>Barcode</b>: omborda skaner bilan qabul qilish va sanash</li>
-        <li><b>Expenses</b>: ijara, svet, maosh kabi xarajatlar</li>
-      </ul></div>
-    </div>
-    <div class="tip"><b>Muhim</b>Hamma narsani birdaniga o'rnatmang. Har yangi bo'lim yangi sozlash va o'rganish degani. Avval kassa va ombor bir-ikki hafta muammosiz ishlasin.</div>
-    <button class="donebtn" type="button" aria-pressed="false">O'qib chiqdim</button>
-  </article>
+    <section class="sec" id="muammo">
+      <span class="eyebrow">Yordam</span>
+      <h2>Ko'p uchraydigan muammolar</h2>
+      <div class="faq">
+        <details><summary>Tovar kassada ko'rinmayapti</summary><dl class="ans"><dt>Sababi</dt><dd>Kartada “Available in POS” belgisi yo'q</dd><dt>Yechimi</dt><dd>Tovar kartasi → Point of Sale yorlig'i → belgini qo'ying</dd></dl></details>
+        <details><summary>Qoldiq minusga ketdi</summary><dl class="ans"><dt>Sababi</dt><dd>Birinchi sanash qilinmagan yoki kirim kiritilmagan</dd><dt>Yechimi</dt><dd>Physical Inventory orqali haqiqiy sonni kiriting</dd></dl></details>
+        <details><summary>Qoldiq umuman sanalmayapti</summary><dl class="ans"><dt>Sababi</dt><dd>Tovarda “Track Inventory” yoqilmagan</dd><dt>Yechimi</dt><dd>Tovar kartasida Track Inventory belgisini qo'ying</dd></dl></details>
+        <details><summary>Kassada eski narx chiqyapti</summary><dl class="ans"><dt>Sababi</dt><dd>Kassa sahifasi yangilanmagan yoki Pricelist boshqa narx beryapti</dd><dt>Yechimi</dt><dd>Kassa sahifasini F5 bilan yangilang, Pricelist'ni tekshiring</dd></dl></details>
+        <details><summary>Kassa yopilmayapti</summary><dl class="ans"><dt>Sababi</dt><dd>Internet uzilganda qilingan savdolar hali yuborilmagan</dd><dt>Yechimi</dt><dd>Internetni tekshiring, sinxronlash belgisi tugashini kuting</dd></dl></details>
+        <details><summary>Kechqurun pul to'g'ri kelmayapti</summary><dl class="ans"><dt>Sababi</dt><dd>Qaytarish yoki nasiya noto'g'ri kiritilgan</dd><dt>Yechimi</dt><dd>POS → Orders'da kunlik cheklarni to'lov usuli bo'yicha guruhlab tekshiring</dd></dl></details>
+      </div>
+    </section>
 
-  <section class="section">
-    <h2>Do'kondagi bir kun Odoo'da</h2>
-    <div class="day">
-      <div class="row"><b>Ertalab</b><span>Point of Sale → <b>Open Register</b>. Kassadagi naqd pulni kiriting.</span></div>
-      <div class="row"><b>Kun davomida</b><span>Savdo kassada. Ta'minotchi kelsa: Purchase → buyurtma → <b>Receive</b>.</span></div>
-      <div class="row"><b>Tushlikdan keyin</b><span>Inventory → <b>Replenishment</b>: nima tugayotganini ko'ring.</span></div>
-      <div class="row"><b>Kechqurun</b><span>Kassani yoping, naqd pulni sanang. Farq bo'lsa, sababini yozib qo'ying.</span></div>
-      <div class="row"><b>Hafta oxiri</b><span>Point of Sale → Reporting → <b>Orders</b>: eng ko'p sotilgan tovarlar va kunlik tushum.</span></div>
-    </div>
-  </section>
+    <section class="sec" id="lugat">
+      <span class="eyebrow">Tarjima</span>
+      <h2>Lug'at</h2>
+      <p>Odoo menyulari ko'pincha inglizcha yoki ruscha chiqadi. Kerakli so'zni qidiring:</p>
+      <label class="search" for="q"><svg class="i"><use href="#i-search"/></svg><input id="q" type="search" placeholder="Masalan: chek, qoldiq, Refund…" autocomplete="off"></label>
+      <div class="tablewrap"><table>
+        <thead><tr><th>English</th><th>Русский</th><th>O'zbekcha</th></tr></thead>
+        <tbody id="glos">
+          <tr><td>Product</td><td>Товар</td><td>Tovar, mahsulot</td></tr>
+          <tr><td>On Hand</td><td>В наличии</td><td>Hozirgi qoldiq</td></tr>
+          <tr><td>Cost</td><td>Себестоимость</td><td>Tannarx</td></tr>
+          <tr><td>Sales Price</td><td>Цена продажи</td><td>Sotish narxi</td></tr>
+          <tr><td>Vendor</td><td>Поставщик</td><td>Ta'minotchi</td></tr>
+          <tr><td>Receipt</td><td>Поступление / Чек</td><td>Kirim (omborda) yoki chek (kassada)</td></tr>
+          <tr><td>Invoice / Bill</td><td>Счёт</td><td>Mijozga hisob / ta'minotchi hisobi</td></tr>
+          <tr><td>Register / Session</td><td>Сессия кассы</td><td>Kassa smenasi</td></tr>
+          <tr><td>Validate</td><td>Подтвердить</td><td>Tasdiqlash</td></tr>
+          <tr><td>Reordering Rule</td><td>Правило пополнения</td><td>Minimal qoldiq qoidasi</td></tr>
+          <tr><td>Refund</td><td>Возврат</td><td>Qaytarish</td></tr>
+          <tr><td>Discount</td><td>Скидка</td><td>Chegirma</td></tr>
+          <tr><td>Pricelist</td><td>Прайс-лист</td><td>Narx ro'yxati</td></tr>
+          <tr><td>Customer Account</td><td>Счёт клиента</td><td>Nasiya, mijoz qarzi</td></tr>
+          <tr><td>Group By</td><td>Группировать</td><td>Guruhlash</td></tr>
+          <tr><td>Valuation</td><td>Оценка запасов</td><td>Ombordagi tovar qiymati</td></tr>
+        </tbody>
+      </table><div class="empty" id="empty" hidden>Bunday so'z topilmadi.</div></div>
+    </section>
 
-  <section class="section">
-    <h2>Qanday uskuna kerak</h2>
-    <p>Odoo brauzerda ishlaydi, maxsus kompyuter shart emas. Boshlash uchun bitta noutbuk yoki planshet yetadi, qolganini keyin qo'shasiz.</p>
-    <div class="tablewrap"><table>
-      <thead><tr><th>Uskuna</th><th>Kerakmi</th><th>Izoh</th></tr></thead>
-      <tbody>
-        <tr><td>Kompyuter yoki planshet</td><td>Shart</td><td>Chrome brauzeri bo'lsa yetadi. Planshetda ekranga barmoq bilan bosiladi</td></tr>
-        <tr><td>Internet</td><td>Shart</td><td>Uzilib qolsa, kassa ishlashda davom etadi va keyin ma'lumotlarni yuboradi</td></tr>
-        <tr><td>Shtrix-kod skaner (USB)</td><td>Juda foydali</td><td>Klaviatura kabi ulanadi, sozlash talab qilmaydi</td></tr>
-        <tr><td>Chek printer</td><td>Ixtiyoriy</td><td>Oddiy usulda brauzer orqali chop etadi. Avtomatik chop etish uchun Odoo IoT Box yoki ePOS (Epson) printer kerak</td></tr>
-        <tr><td>Pul qutisi</td><td>Ixtiyoriy</td><td>Odatda chek printerga ulanadi va to'lovda o'zi ochiladi</td></tr>
-        <tr><td>Telefon</td><td>Foydali</td><td>Odoo ilovasi orqali do'konda bo'lmasangiz ham savdoni ko'rasiz</td></tr>
-      </tbody>
-    </table></div>
-  </section>
+    <section class="sec" id="tartib">
+      <span class="eyebrow">Reja</span>
+      <h2>O'rganish tartibi</h2>
+      <div class="path">
+        <div>Sozlamalar: do'kon nomi, so'm, til</div>
+        <div>Tovarlarni kiritish, Excel orqali</div>
+        <div>Ombordagi qoldiqni sanash</div>
+        <div>Kassani sozlash, 5–10 sinov savdosi</div>
+        <div>Bir hafta faqat kassa va ombor</div>
+        <div>Keyin Purchase, so'ng Invoicing</div>
+      </div>
+      <div class="links">
+        <a href="https://www.odoo.com/slides" target="_blank" rel="noopener">Odoo bepul videodarslari ↗</a>
+        <a href="https://www.odoo.com/documentation" target="_blank" rel="noopener">Odoo rasmiy hujjatlari ↗</a>
+      </div>
+    </section>
 
-  <section class="section">
-    <h2>Ko'p uchraydigan muammolar</h2>
-    <div class="tablewrap"><table>
-      <thead><tr><th>Muammo</th><th>Sababi</th><th>Yechimi</th></tr></thead>
-      <tbody>
-        <tr><td>Tovar kassada ko'rinmayapti</td><td>Kartada “Available in POS” belgisi yo'q</td><td>Tovar kartasini oching → Point of Sale yorlig'i → belgilang</td></tr>
-        <tr><td>Qoldiq minusga ketdi</td><td>Birinchi sanash qilinmagan yoki kirim kiritilmagan</td><td>Physical Inventory orqali haqiqiy sonni kiriting</td></tr>
-        <tr><td>Qoldiq umuman sanalmayapti</td><td>Tovar turida “Track Inventory” yoqilmagan</td><td>Tovar kartasida Track Inventory belgisini qo'ying</td></tr>
-        <tr><td>Kassada eski narx chiqyapti</td><td>Kassa sahifasi yangilanmagan yoki narx ro'yxati (Pricelist) boshqa narx beryapti</td><td>Kassa sahifasini qayta yuklang (F5), Pricelist'ni tekshiring</td></tr>
-        <tr><td>Kassa yopilmayapti</td><td>Internet uzilganda qilingan savdolar hali yuborilmagan</td><td>Internetni tekshiring, yuqoridagi sinxronlash belgisi tugashini kuting</td></tr>
-        <tr><td>Kechqurun pul to'g'ri kelmayapti</td><td>Qaytarish yoki qarz noto'g'ri kiritilgan</td><td>POS → Orders'da kunlik cheklarni to'lov usuli bo'yicha guruhlab tekshiring</td></tr>
-      </tbody>
-    </table></div>
-  </section>
-
-  <section class="section">
-    <h2>Lug'at</h2>
-    <p>Odoo interfeysi o'zbek tilida to'liq emas, shuning uchun ko'p so'zlar inglizcha yoki ruscha chiqadi.</p>
-    <div class="tablewrap"><table>
-      <thead><tr><th>English</th><th>Русский</th><th>O'zbekcha ma'nosi</th></tr></thead>
-      <tbody>
-        <tr><td>Product</td><td>Товар</td><td>Tovar, mahsulot</td></tr>
-        <tr><td>On Hand</td><td>В наличии</td><td>Hozirgi qoldiq</td></tr>
-        <tr><td>Cost</td><td>Себестоимость</td><td>Tannarx</td></tr>
-        <tr><td>Sales Price</td><td>Цена продажи</td><td>Sotish narxi</td></tr>
-        <tr><td>Vendor</td><td>Поставщик</td><td>Ta'minotchi</td></tr>
-        <tr><td>Receipt</td><td>Поступление / Чек</td><td>Kirim (omborda) yoki chek (kassada)</td></tr>
-        <tr><td>Invoice / Bill</td><td>Счёт</td><td>Mijozga hisob / ta'minotchi hisobi</td></tr>
-        <tr><td>Register / Session</td><td>Сессия кассы</td><td>Kassa smenasi</td></tr>
-        <tr><td>Validate</td><td>Подтвердить</td><td>Tasdiqlash</td></tr>
-        <tr><td>Reordering Rule</td><td>Правило пополнения</td><td>Minimal qoldiq qoidasi</td></tr>
-        <tr><td>Refund</td><td>Возврат</td><td>Qaytarish</td></tr>
-        <tr><td>Discount</td><td>Скидка</td><td>Chegirma</td></tr>
-        <tr><td>Pricelist</td><td>Прайс-лист</td><td>Narx ro'yxati (ulgurji, aksiya)</td></tr>
-        <tr><td>Customer Account</td><td>Счёт клиента</td><td>Nasiya, mijoz qarzi</td></tr>
-        <tr><td>Group By</td><td>Группировать</td><td>Guruhlash (hisobotda)</td></tr>
-        <tr><td>Valuation</td><td>Оценка запасов</td><td>Ombordagi tovar qiymati</td></tr>
-      </tbody>
-    </table></div>
-  </section>
-
-  <section class="section">
-    <h2>O'rganish tartibi</h2>
-    <ol>
-      <li>Sozlamalar: do'kon nomi, valyuta UZS, til</li>
-      <li>Tovarlarni kiritish, kerak bo'lsa Excel orqali</li>
-      <li>Ombordagi qoldiqni sanab kiritish</li>
-      <li>Kassani sozlash va 5–10 ta sinov savdosi</li>
-      <li>Haqiqiy ish: bir hafta faqat kassa va ombor bilan</li>
-      <li>Keyin Purchase, so'ng Invoicing</li>
-    </ol>
-    <p>Bepul darslar: <a href="https://www.odoo.com/slides" target="_blank" rel="noopener">odoo.com/slides</a> (eLearning), hujjatlar: <a href="https://www.odoo.com/documentation" target="_blank" rel="noopener">odoo.com/documentation</a>. Ikkalasida ham rus tili bor.</p>
-  </section>
-
-  <footer>Menyu nomlari Odoo 17–18 versiyalari bo'yicha. Boshqa versiyalarda ozgina farq qilishi mumkin.</footer>
+    <footer>Menyu nomlari Odoo 17–18 versiyalari bo'yicha, boshqa versiyalarda biroz farq qilishi mumkin. Odoo — Odoo S.A. savdo belgisi; bu qo'llanma mustaqil.</footer>
+  </main>
 </div>
 
 <script>
 (function(){
-  var KEY='odoo-dokon-done';
-  var done={};
+  var KEY='odoo-dokon-done', done={};
   try{done=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){done={}}
-  var mods=[].slice.call(document.querySelectorAll('.mod'));
-  var idx=document.getElementById('index');
-  var labels={must:'Majburiy',useful:'Foydali',later:'Keyinroq'};
-  mods.forEach(function(m){
-    var a=document.createElement('a'); a.href='#'+m.id;
-    a.innerHTML='<span class="t"></span><span class="tag '+m.dataset.tag+'">'+labels[m.dataset.tag]+'</span>';
-    a.querySelector('.t').textContent=m.dataset.title; idx.appendChild(a); m._link=a;
-    var b=m.querySelector('.donebtn');
-    b.addEventListener('click',function(){done[m.id]=!done[m.id];save();render()});
+  var lessons=[].slice.call(document.querySelectorAll('.lesson'));
+  var toc=document.getElementById('toc'), sep=toc.querySelector('.sep');
+  lessons.forEach(function(l,i){
+    var a=document.createElement('a'); a.href='#'+l.id;
+    a.innerHTML='<span class="n"><span>'+(i+1)+'</span></span><span class="t"></span>';
+    a.querySelector('.t').textContent=l.dataset.title; toc.insertBefore(a,sep); l._a=a;
+    l.querySelector('.donebtn').addEventListener('click',function(){done[l.id]=!done[l.id];try{localStorage.setItem(KEY,JSON.stringify(done))}catch(e){}render()});
   });
-  function save(){try{localStorage.setItem(KEY,JSON.stringify(done))}catch(e){}}
   function render(){
-    var n=0;
-    mods.forEach(function(m){var d=!!done[m.id];if(d)n++;
-      var b=m.querySelector('.donebtn');b.setAttribute('aria-pressed',d);b.textContent=d?'✓ O\'qildi':'O\'qib chiqdim';
-      m._link.classList.toggle('done',d)});
-    document.getElementById('bar').style.width=(n/mods.length*100)+'%';
-    document.getElementById('ptext').textContent=n+' / '+mods.length+' dars o\'qildi';
+    var n=0,next=null;
+    lessons.forEach(function(l){var d=!!done[l.id];if(d)n++;else if(!next)next=l;
+      var b=l.querySelector('.donebtn');b.setAttribute('aria-pressed',d);b.textContent=d?'✓ O\'qildi':'O\'qib chiqdim';l._a.classList.toggle('done',d)});
+    document.getElementById('pnum').textContent=n;document.getElementById('ptot').textContent=lessons.length;
+    document.getElementById('bar').style.width=(n/lessons.length*100)+'%';
+    var nx=document.getElementById('pnext'),msg=document.getElementById('pmsg');
+    if(!next){nx.textContent='Lug\'atga o\'tish →';nx.href='#lugat';msg.textContent='Barakalla! Hamma darslarni o\'qib chiqdingiz.'}
+    else if(n===0){nx.textContent='Birinchi darsdan boshlash →';nx.href='#'+next.id}
+    else{nx.textContent='Davom etish: '+next.dataset.title+' →';nx.href='#'+next.id;msg.textContent='Yaxshi ketyapsiz. Keyingi dars kutib turibdi.'}
   }
   render();
+  var q=document.getElementById('q'),rows=[].slice.call(document.querySelectorAll('#glos tr')),empty=document.getElementById('empty');
+  q.addEventListener('input',function(){var v=q.value.trim().toLowerCase(),k=0;
+    rows.forEach(function(r){var s=!v||r.textContent.toLowerCase().indexOf(v)>-1;r.hidden=!s;if(s)k++});empty.hidden=k>0});
 })();
 </script>
 
